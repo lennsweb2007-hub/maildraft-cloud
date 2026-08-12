@@ -5,10 +5,11 @@
   "framework": null,
 
   "functions": {
-    "api/[...pfad].ts": { "maxDuration": 60 }
+    "api/router.ts": { "maxDuration": 60 }
   },
 
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/router?pfad=$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
 

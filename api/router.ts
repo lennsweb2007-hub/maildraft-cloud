@@ -18,6 +18,15 @@
  * Die Importe sind bewusst statisch und nicht dynamisch: So faellt ein
  * falscher Pfad schon beim Typecheck auf statt erst zur Laufzeit in der
  * Produktion.
+ *
+ * Wie die Anfragen hier ankommen: ueber eine Rewrite-Regel in der
+ * vercel.json, die /api/(.*) auf /api/router?pfad=$1 umschreibt. Der erste
+ * Versuch lief ueber eine Datei namens [...pfad].ts - Vercel hat die
+ * Klammernschreibweise aber nicht als Catch-all gelesen, sondern als
+ * gewoehnliches dynamisches Segment: Pfade mit zwei Abschnitten
+ * (/api/emails/fetch) erreichten die Funktion gar nicht, und bei einem
+ * Abschnitt kam der Wert unter einem anderen Namen an. Die Rewrite-Regel ist
+ * eindeutig und braucht keine Annahme darueber, wie Vercel Dateinamen deutet.
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
@@ -73,11 +82,29 @@ const ROUTEN: Record<string, Handler> = {
   'settings/test-ai': kiTest,
 };
 
+/**
+ * Der angefragte Pfad hinter /api, ohne fuehrenden und abschliessenden
+ * Schraegstrich.
+ *
+ * Erste Quelle ist der Parameter aus der Rewrite-Regel. Schlaegt der fehl -
+ * etwa weil jemand die Regel aendert oder die Funktion direkt aufruft -,
+ * wird die Adresse selbst ausgewertet. Zwei Quellen, weil ein stiller
+ * Fehlschlag hier die gesamte API auf 404 setzen wuerde.
+ */
+function ermittlePfad(req: VercelRequest): string {
+  const ausRegel = req.query.pfad;
+  const roh = Array.isArray(ausRegel) ? ausRegel.join('/') : ausRegel;
+  if (roh) return roh.replace(/^\/+|\/+$/g, '');
+
+  const adresse = req.url ?? '';
+  const ohneQuery = adresse.split('?')[0] ?? '';
+  return ohneQuery.replace(/^\/api\/?/, '').replace(/^\/+|\/+$/g, '');
+}
+
 export default async function verteile(req: VercelRequest, res: VercelResponse): Promise<void> {
   try {
-    const roh = req.query.pfad;
-    const segmente = Array.isArray(roh) ? roh : roh ? [roh] : [];
-    const pfad = segmente.join('/');
+    const pfad = ermittlePfad(req);
+    const segmente = pfad ? pfad.split('/') : [];
 
     const route = ROUTEN[pfad];
     if (route) return route(req, res);
