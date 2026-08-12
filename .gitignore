@@ -1,0 +1,19 @@
+# Abhaengigkeiten
+node_modules/
+
+# Geheimnisse - NIEMALS committen
+# Bewusst breit: alles was mit .env beginnt, ausser der Vorlage. Eine Datei
+# ".env,local" (Komma statt Punkt) rutschte an den engeren Mustern vorbei.
+.env*
+!.env.example
+
+# Build
+client/dist/
+.vercel/
+*.tsbuildinfo
+
+# Editor / Betriebssystem
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

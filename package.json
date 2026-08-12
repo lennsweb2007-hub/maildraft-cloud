@@ -1,0 +1,36 @@
+{
+  "name": "maildraft-cloud",
+  "version": "2.0.0",
+  "private": true,
+  "description": "MailDraft AI - Cloud-Fassung fuer Vercel mit Supabase",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "npm run build --workspace client",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run build"
+  },
+  "workspaces": [
+    "client"
+  ],
+  "dependencies": {
+    "@azure/msal-node": "^2.16.2",
+    "@google/genai": "^1.0.1",
+    "@supabase/supabase-js": "^2.48.1",
+    "googleapis": "^144.0.0",
+    "imapflow": "^1.0.171",
+    "mailparser": "^3.7.2",
+    "nodemailer": "^6.10.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/mailparser": "^3.4.6",
+    "@types/node": "^22.10.5",
+    "@types/nodemailer": "^6.4.17",
+    "@vercel/node": "^5.0.2",
+    "typescript": "^5.7.3"
+  }
+}

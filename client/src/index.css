@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Grundlagen
+   Die App läuft dauerhaft im dunklen Design. Sie wird täglich über
+   Stunden benutzt, oft abends - helles Weiß wäre hier eine Zumutung.
+--------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-ink-950 text-ink-100 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04';
+  }
+
+  /* Schmale, unaufdringliche Scrollbalken */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink-800;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-700;
+  }
+
+  /* Sichtbarer Fokusring für Tastaturbedienung */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-400 ring-offset-2 ring-offset-ink-950;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Wiederkehrende Bausteine
+--------------------------------------------------------------------------- */
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-ink-800 bg-ink-900/60 backdrop-blur-sm;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm
+           font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-500 active:bg-brand-700;
+  }
+
+  .btn-secondary {
+    @apply btn border border-ink-700 bg-ink-800 text-ink-100 hover:border-ink-600 hover:bg-ink-700;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-300 hover:bg-ink-800 hover:text-ink-100;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600/90 text-white hover:bg-red-500;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-ink-700 bg-ink-950/60 px-3 py-2 text-sm text-ink-100
+           placeholder-ink-500 transition-colors focus:border-brand-500 focus:outline-none
+           focus:ring-1 focus:ring-brand-500;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink-200;
+  }
+
+  .hint {
+    @apply mt-1.5 text-xs leading-relaxed text-ink-400;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-medium;
+  }
+
+  /* Tabellenkopf, der beim Scrollen stehen bleibt */
+  .th {
+    @apply sticky top-0 z-10 bg-ink-900 px-4 py-2.5 text-left text-xs font-semibold
+           uppercase tracking-wide text-ink-400;
+  }
+
+  .td {
+    @apply px-4 py-3 text-sm text-ink-200;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Recharts an das dunkle Design anpassen
+--------------------------------------------------------------------------- */
+
+.recharts-cartesian-axis-tick text {
+  fill: #8591aa;
+  font-size: 11px;
+}
+
+.recharts-cartesian-grid line {
+  stroke: #3a4052;
+}
+
+.recharts-tooltip-wrapper:focus {
+  outline: none;
+}
