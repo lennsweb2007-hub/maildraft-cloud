@@ -12,13 +12,13 @@
  * eigene Kaltstartzeit.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError } from '../_lib/errors.js';
-import { protokolliere } from '../_lib/audit.js';
-import { draftAendernSchema, pruefe, uuid } from '../_lib/validate.js';
-import { alsDienst } from '../_lib/supabase.js';
-import * as gemini from '../_services/gemini.js';
-import type { Kategorie, Profil, Szenario } from '../_services/typen.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError } from '../../_lib/errors.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { draftAendernSchema, pruefe, uuid } from '../../_lib/validate.js';
+import { alsDienst } from '../../_lib/supabase.js';
+import * as gemini from '../../_services/gemini.js';
+import type { Kategorie, Profil, Szenario } from '../../_services/typen.js';
 
 /** Lokales Datum als YYYY-MM-DD. */
 function heute(datum = new Date()): string {

@@ -14,12 +14,12 @@
  * Aufruf fuer sich abgeschlossen, und die Oberflaeche zeigt den Fortschritt.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { alsDienst } from '../_lib/supabase.js';
-import { protokolliere } from '../_lib/audit.js';
-import * as gemini from '../_services/gemini.js';
-import { vorfilter } from '../_services/relevanceFilter.js';
-import type { Profil } from '../_services/typen.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { alsDienst } from '../../_lib/supabase.js';
+import { protokolliere } from '../../_lib/audit.js';
+import * as gemini from '../../_services/gemini.js';
+import { vorfilter } from '../../_services/relevanceFilter.js';
+import type { Profil } from '../../_services/typen.js';
 
 function heute(datum = new Date()): string {
   const pad = (n: number) => String(n).padStart(2, '0');

@@ -6,11 +6,11 @@
  * Signatur, Markenname - sowie die Stellschrauben der Relevanzpruefung.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { protokolliere } from '../_lib/audit.js';
-import { einstellungenSchema, pruefe } from '../_lib/validate.js';
-import { config, verfuegbareAnbieter } from '../_lib/config.js';
-import type { Profil } from '../_services/typen.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { einstellungenSchema, pruefe } from '../../_lib/validate.js';
+import { config, verfuegbareAnbieter } from '../../_lib/config.js';
+import type { Profil } from '../../_services/typen.js';
 
 function antwort(profil: Profil) {
   return {

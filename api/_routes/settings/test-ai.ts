@@ -6,7 +6,7 @@
  * hilft niemandem weiter.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { testeVerbindung } from '../_services/gemini.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { testeVerbindung } from '../../_services/gemini.js';
 
 export default geschuetzt({ methoden: ['GET'] }, async () => testeVerbindung());

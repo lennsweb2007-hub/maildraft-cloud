@@ -6,12 +6,12 @@
  * statt stillschweigend eine Vorlage zu bekommen.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError } from '../_lib/errors.js';
-import { protokolliere } from '../_lib/audit.js';
-import { pruefe, uuid } from '../_lib/validate.js';
-import * as gemini from '../_services/gemini.js';
-import type { Kategorie, Profil, Szenario } from '../_services/typen.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError } from '../../_lib/errors.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { pruefe, uuid } from '../../_lib/validate.js';
+import * as gemini from '../../_services/gemini.js';
+import type { Kategorie, Profil, Szenario } from '../../_services/typen.js';
 
 export default geschuetzt({ methoden: ['POST'] }, async ({ db, req, user }) => {
   const id = pruefe(uuid, req.query.id);

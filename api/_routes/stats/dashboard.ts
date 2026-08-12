@@ -10,8 +10,8 @@
  * dasselbe bedeutet: Montag bis heute, in lokaler Zeit.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError } from '../_lib/errors.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError } from '../../_lib/errors.js';
 
 type Zeitraum = 'today' | 'week' | 'month' | '30days';
 

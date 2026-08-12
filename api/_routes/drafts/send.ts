@@ -11,13 +11,13 @@
  *  - Erst nach erfolgreichem Versand wird die Historie geschrieben.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError, ReauthRequiredError } from '../_lib/errors.js';
-import { protokolliere } from '../_lib/audit.js';
-import { draftSendenSchema, pruefe, uuid } from '../_lib/validate.js';
-import { alsDienst } from '../_lib/supabase.js';
-import * as mail from '../_services/mail.js';
-import type { Postfach } from '../_services/typen.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError, ReauthRequiredError } from '../../_lib/errors.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { draftSendenSchema, pruefe, uuid } from '../../_lib/validate.js';
+import { alsDienst } from '../../_lib/supabase.js';
+import * as mail from '../../_services/mail.js';
+import type { Postfach } from '../../_services/typen.js';
 
 function heute(datum = new Date()): string {
   const pad = (n: number) => String(n).padStart(2, '0');

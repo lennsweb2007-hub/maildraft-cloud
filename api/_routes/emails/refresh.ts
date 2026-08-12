@@ -6,8 +6,8 @@
  * wuerden beide gleichzeitig auf dasselbe Gemini-Kontingent zugreifen.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { fuehreAbrufAus } from '../_services/sync.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { fuehreAbrufAus } from '../../_services/sync.js';
 
 export default geschuetzt(
   { methoden: ['POST'], aktion: 'emails.refresh' },

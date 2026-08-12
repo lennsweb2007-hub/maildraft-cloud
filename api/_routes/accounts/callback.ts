@@ -14,13 +14,13 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { oeffentlich } from '../_lib/handler.js';
-import { alsDienst } from '../_lib/supabase.js';
-import { encrypt, encryptJson } from '../_lib/crypto.js';
-import { protokolliere } from '../_lib/audit.js';
-import { config } from '../_lib/config.js';
-import * as gmail from '../_services/gmail.js';
-import * as outlook from '../_services/outlook.js';
+import { oeffentlich } from '../../_lib/handler.js';
+import { alsDienst } from '../../_lib/supabase.js';
+import { encrypt, encryptJson } from '../../_lib/crypto.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { config } from '../../_lib/config.js';
+import * as gmail from '../../_services/gmail.js';
+import * as outlook from '../../_services/outlook.js';
 
 /** Abschlussseite: meldet das Ergebnis ans Hauptfenster und schliesst sich. */
 function seite(erfolg: boolean, titel: string, text: string, detail?: string): string {

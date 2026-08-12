@@ -12,10 +12,10 @@
  * Schwaeche unterscheidbar haelt - deshalb wird sie nicht umsortiert.
  */
 
-import { geschuetzt } from './_lib/handler.js';
-import { ApiError } from './_lib/errors.js';
-import { protokolliere } from './_lib/audit.js';
-import { kategorieSchema, pruefe, uuid } from './_lib/validate.js';
+import { geschuetzt } from '../_lib/handler.js';
+import { ApiError } from '../_lib/errors.js';
+import { protokolliere } from '../_lib/audit.js';
+import { kategorieSchema, pruefe, uuid } from '../_lib/validate.js';
 
 const PALETTE = [
   '#3987e5', // blau

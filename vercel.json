@@ -5,9 +5,7 @@
   "framework": null,
 
   "functions": {
-    "api/emails/fetch.ts": { "maxDuration": 60 },
-    "api/drafts/send.ts": { "maxDuration": 30 },
-    "api/drafts/regenerate.ts": { "maxDuration": 30 }
+    "api/[...pfad].ts": { "maxDuration": 60 }
   },
 
   "rewrites": [

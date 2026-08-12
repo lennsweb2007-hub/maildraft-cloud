@@ -10,9 +10,9 @@
  * Doppelung und bleibt deshalb weg.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { flach } from '../_lib/relationen.js';
-import { draftListeSchema, pruefe } from '../_lib/validate.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { flach } from '../../_lib/relationen.js';
+import { draftListeSchema, pruefe } from '../../_lib/validate.js';
 
 /** Erlaubte Sortierfelder - schuetzt vor Injektion ueber Query-Parameter. */
 const SORTIERUNG: Record<string, string> = {

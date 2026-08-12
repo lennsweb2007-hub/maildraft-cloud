@@ -13,7 +13,7 @@ Reply-To-Erkennung, Aussortiert-Reiter, Nachprüfung, Historie, Statistik.
 | Teil | Wo | Warum |
 |---|---|---|
 | Oberfläche | Vercel (statisch) | React-Build, ausgeliefert vom CDN |
-| API | Vercel Functions | 15 Endpunkte, TypeScript |
+| API | Vercel Functions | 16 Endpunkte, TypeScript, in **einer** Funktion |
 | Datenbank | Supabase PostgreSQL | mit Row Level Security |
 | Anmeldung | Supabase Auth (Google) | kein eigenes Passwortverfahren |
 | Abruf | EasyCron → `/api/emails/fetch` | Serverless kennt keine Zeitpläne |
@@ -99,6 +99,27 @@ Serverless hat keinen Prozess, der zwischen Anfragen weiterläuft.
 
 Dazu: **SQLite-Backups entfallen** — Supabase sichert selbst.
 
+### Warum die ganze API in einer Funktion steckt
+
+Vercel zählt **jede Datei unter `api/` als eigene Serverless Function**, und der
+Hobby-Tarif erlaubt höchstens zwölf je Bereitstellung. Bei sechzehn Endpunkten
+schlägt das Deployment fehl — der Build läuft dabei sauber durch, erst
+„Deploying outputs" bricht ab.
+
+Statt Endpunkte zu streichen oder einen Bezahltarif zu verlangen, nimmt
+`api/[...pfad].ts` alle Anfragen entgegen und verteilt sie an die Endpunkte
+unter `api/_routes/`. Der Unterstrich hält diesen Ordner aus der Zählung
+heraus.
+
+Was sich dadurch **nicht** ändert: die Adressen nach außen, der Aufbau der
+Endpunkte, Anmeldung, Ratenbegrenzung, Fehlerbehandlung. Wer einen Endpunkt
+hinzufügt, legt ihn unter `api/_routes/` ab und trägt ihn in die Tabelle
+`ROUTEN` ein — die Funktionszahl bleibt bei eins.
+
+Eine Reihenfolge ist dabei bindend: Erst die festen Adressen, dann die
+Auffangregel für `/api/drafts/<kennung>`. Andersherum würde `/api/drafts/send`
+als Entwurf mit der Kennung „send" gelesen.
+
 ### Zeitlimits der Funktionen
 
 In `vercel.json` stehen drei Werte ohne Erklärung, weil die Datei streng
@@ -106,7 +127,7 @@ validiert wird und keine Kommentare erlaubt:
 
 | Funktion | `maxDuration` | Warum |
 |---|---|---|
-| `api/emails/fetch.ts` | 60 s | Die einzige laufzeitintensive Funktion. 60 s sind auch im kostenlosen Tarif erlaubt; sie arbeitet in Häppchen und meldet den Restbestand, statt in ein Zeitlimit zu laufen. Im Pro-Tarif sind bis 300 s möglich — dann `SYNC_TIME_BUDGET_MS` entsprechend anheben. |
+| Alle (`api/[...pfad].ts`) | 60 s | Die einzige laufzeitintensive Funktion. 60 s sind auch im kostenlosen Tarif erlaubt; sie arbeitet in Häppchen und meldet den Restbestand, statt in ein Zeitlimit zu laufen. Im Pro-Tarif sind bis 300 s möglich — dann `SYNC_TIME_BUDGET_MS` entsprechend anheben. |
 | `api/drafts/send.ts` | 30 s | Versand über SMTP oder Provider-API kann bei trägen Servern dauern. |
 | `api/drafts/regenerate.ts` | 30 s | Ein einzelner Gemini-Aufruf, mit Wiederholung bei Überlastung. |
 

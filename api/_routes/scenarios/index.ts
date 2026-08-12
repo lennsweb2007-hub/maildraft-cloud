@@ -10,10 +10,10 @@
  * regelmaessig danebenliegen, liegt es fast immer hier und nicht am Tonfall.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError } from '../_lib/errors.js';
-import { protokolliere } from '../_lib/audit.js';
-import { pruefe, szenarioSchema, uuid } from '../_lib/validate.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError } from '../../_lib/errors.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { pruefe, szenarioSchema, uuid } from '../../_lib/validate.js';
 
 export default geschuetzt(
   { methoden: ['GET', 'POST', 'PUT', 'DELETE'] },

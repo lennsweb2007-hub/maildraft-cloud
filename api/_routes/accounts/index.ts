@@ -8,15 +8,15 @@
  * POST   /api/accounts?id=...&tat=toggle  aktiv schalten
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError } from '../_lib/errors.js';
-import { protokolliere } from '../_lib/audit.js';
-import { encrypt } from '../_lib/crypto.js';
-import { imapKontoSchema, pruefe, uuid } from '../_lib/validate.js';
-import { verfuegbareAnbieter } from '../_lib/config.js';
-import * as mail from '../_services/mail.js';
-import { schlageVor } from '../_services/imap.js';
-import type { Postfach } from '../_services/typen.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError } from '../../_lib/errors.js';
+import { protokolliere } from '../../_lib/audit.js';
+import { encrypt } from '../../_lib/crypto.js';
+import { imapKontoSchema, pruefe, uuid } from '../../_lib/validate.js';
+import { verfuegbareAnbieter } from '../../_lib/config.js';
+import * as mail from '../../_services/mail.js';
+import { schlageVor } from '../../_services/imap.js';
+import type { Postfach } from '../../_services/typen.js';
 
 /**
  * Entfernt alle Geheimnisse, bevor ein Postfach die API verlaesst.

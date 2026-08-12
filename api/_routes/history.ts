@@ -9,8 +9,8 @@
 
 import { z } from 'zod';
 
-import { geschuetzt } from './_lib/handler.js';
-import { pruefe, zahlAusQuery } from './_lib/validate.js';
+import { geschuetzt } from '../_lib/handler.js';
+import { pruefe, zahlAusQuery } from '../_lib/validate.js';
 
 const SORTIERUNG: Record<string, string> = {
   date: 'sent_at',

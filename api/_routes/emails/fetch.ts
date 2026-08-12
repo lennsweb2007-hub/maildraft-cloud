@@ -14,9 +14,9 @@
  * und endet sofort, statt zu warten.
  */
 
-import { oeffentlich } from '../_lib/handler.js';
-import { fuehreAbrufAus } from '../_services/sync.js';
-import { raeumeRateAuf } from '../_lib/rateLimit.js';
+import { oeffentlich } from '../../_lib/handler.js';
+import { fuehreAbrufAus } from '../../_services/sync.js';
+import { raeumeRateAuf } from '../../_lib/rateLimit.js';
 
 export default oeffentlich({ methoden: ['GET', 'POST'], cronGeschuetzt: true }, async () => {
   const ergebnis = await fuehreAbrufAus();

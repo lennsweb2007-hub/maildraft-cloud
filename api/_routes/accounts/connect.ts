@@ -11,12 +11,12 @@
  * die kommt vom Browser des Anbieters und kann kein Anmelde-Token mitbringen.
  */
 
-import { geschuetzt } from '../_lib/handler.js';
-import { ApiError } from '../_lib/errors.js';
-import { zufallsToken } from '../_lib/crypto.js';
-import { alsDienst } from '../_lib/supabase.js';
-import * as gmail from '../_services/gmail.js';
-import * as outlook from '../_services/outlook.js';
+import { geschuetzt } from '../../_lib/handler.js';
+import { ApiError } from '../../_lib/errors.js';
+import { zufallsToken } from '../../_lib/crypto.js';
+import { alsDienst } from '../../_lib/supabase.js';
+import * as gmail from '../../_services/gmail.js';
+import * as outlook from '../../_services/outlook.js';
 
 export default geschuetzt({ methoden: ['GET'] }, async ({ req, user }) => {
   const anbieter = String(req.query.provider ?? '');
