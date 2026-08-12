@@ -32,9 +32,16 @@ const optionen = {
  * Das JWT wird als Authorization-Header mitgeschickt; Supabase leitet daraus
  * auth.uid() ab, und die RLS-Policies greifen. Selbst wenn im Code ein Filter
  * auf user_id vergessen wird, kann diese Verbindung keine fremden Daten sehen.
+ *
+ * WICHTIG: als apikey steht hier der oeffentliche Schluessel, nicht der
+ * Service-Role-Key. Mit dem Service-Role-Key haengt es vom Schluesselformat ab,
+ * ob die Rolle aus dem Authorization-Header oder aus dem apikey abgeleitet wird
+ * - beim neuen Format (sb_secret_...) koennte die Verbindung dann still auf
+ * volle Rechte springen und die Zugriffsregeln umgehen. Mit dem oeffentlichen
+ * Schluessel entscheidet immer das Nutzer-Token, unabhaengig vom Format.
  */
 export function fuerNutzer(jwt: string): SupabaseClient {
-  return createClient(config.supabase.url, config.supabase.serviceRoleKey, {
+  return createClient(config.supabase.url, config.supabase.anonKey, {
     ...optionen,
     global: { headers: { Authorization: `Bearer ${jwt}` } },
   });

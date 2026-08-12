@@ -64,6 +64,15 @@ export const config = {
     get serviceRoleKey() {
       return pflicht('SUPABASE_SERVICE_ROLE_KEY');
     },
+    /**
+     * Oeffentlicher Schluessel, auch serverseitig gebraucht: Verbindungen im
+     * Namen eines Nutzers muessen ihn als apikey senden, nicht den
+     * Service-Role-Key - sonst haengt es vom Schluesselformat ab, ob die
+     * Zugriffsregeln ueberhaupt greifen. Siehe fuerNutzer() in supabase.ts.
+     */
+    get anonKey() {
+      return optional('SUPABASE_ANON_KEY') || pflicht('VITE_SUPABASE_ANON_KEY');
+    },
   },
 
   crypto: {
