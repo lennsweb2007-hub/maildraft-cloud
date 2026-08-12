@@ -4,38 +4,47 @@
 
 /* ---------------------------------------------------------------------------
    Grundlagen
-   Die App läuft dauerhaft im dunklen Design. Sie wird täglich über
-   Stunden benutzt, oft abends - helles Weiß wäre hier eine Zumutung.
+
+   Helles, warmes Design. Die App wird ueber Stunden gelesen, oft neben dem
+   Postfach - sie soll neben Gmail und Outlook nicht wie ein Fremdkoerper
+   wirken. Die Neutraltoene sind bewusst leicht ins Warme gezogen: ein reines
+   Grau neben Terrakotta wirkt schmutzig.
 --------------------------------------------------------------------------- */
 
 @layer base {
   html {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   body {
-    @apply bg-ink-950 text-ink-100 antialiased;
+    @apply bg-ink-50 text-ink-950 antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04';
   }
 
-  /* Schmale, unaufdringliche Scrollbalken */
+  /* Schmale, zurueckhaltende Scrollbalken */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-ink-800;
+    @apply rounded-full bg-ink-300;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-ink-700;
+    @apply bg-ink-400;
   }
 
-  /* Sichtbarer Fokusring für Tastaturbedienung */
+  /* Sichtbarer Fokusring fuer Tastaturbedienung */
   :focus-visible {
-    @apply outline-none ring-2 ring-brand-400 ring-offset-2 ring-offset-ink-950;
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-ink-50;
+  }
+
+  /* Textmarkierung in der Akzentfarbe statt im Browser-Blau */
+  ::selection {
+    background-color: rgba(217, 119, 87, 0.18);
+    @apply text-ink-950;
   }
 }
 
@@ -44,8 +53,12 @@
 --------------------------------------------------------------------------- */
 
 @layer components {
+  /*
+   * Flaechen liegen weiss auf dem warmen Grund. Die Trennung entsteht ueber
+   * Linie und einen sehr flachen Schatten - nicht ueber Kontrast.
+   */
   .card {
-    @apply rounded-xl border border-ink-800 bg-ink-900/60 backdrop-blur-sm;
+    @apply rounded-lg border border-ink-200 bg-white shadow-panel;
   }
 
   .btn {
@@ -54,33 +67,38 @@
   }
 
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-500 active:bg-brand-700;
+    @apply btn bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700;
   }
 
   .btn-secondary {
-    @apply btn border border-ink-700 bg-ink-800 text-ink-100 hover:border-ink-600 hover:bg-ink-700;
+    @apply btn border border-ink-200 bg-ink-100 text-ink-950 hover:border-ink-300 hover:bg-ink-200;
   }
 
   .btn-ghost {
-    @apply btn text-ink-300 hover:bg-ink-800 hover:text-ink-100;
+    @apply btn text-ink-700 hover:bg-ink-100 hover:text-ink-950;
   }
 
   .btn-danger {
-    @apply btn bg-red-600/90 text-white hover:bg-red-500;
+    @apply btn bg-red-600 text-white hover:bg-red-700;
   }
 
   .input {
-    @apply w-full rounded-lg border border-ink-700 bg-ink-950/60 px-3 py-2 text-sm text-ink-100
+    @apply w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm text-ink-950
            placeholder-ink-500 transition-colors focus:border-brand-500 focus:outline-none
-           focus:ring-1 focus:ring-brand-500;
+           focus:ring-[3px] focus:ring-brand-500/10;
   }
 
+  /*
+   * Feldbeschriftung: klein, gesperrt, in Salbei. Grossbuchstaben und
+   * Sperrung tragen den geringen Kontrast der Farbe - als Fliesstext waere
+   * sie zu schwach.
+   */
   .label {
-    @apply mb-1.5 block text-sm font-medium text-ink-200;
+    @apply mb-1.5 block text-[11px] font-bold uppercase tracking-[0.5px] text-sage-600;
   }
 
   .hint {
-    @apply mt-1.5 text-xs leading-relaxed text-ink-400;
+    @apply mt-1.5 text-xs leading-relaxed text-ink-600;
   }
 
   .badge {
@@ -89,26 +107,26 @@
 
   /* Tabellenkopf, der beim Scrollen stehen bleibt */
   .th {
-    @apply sticky top-0 z-10 bg-ink-900 px-4 py-2.5 text-left text-xs font-semibold
-           uppercase tracking-wide text-ink-400;
+    @apply sticky top-0 z-10 border-b border-ink-200 bg-ink-100 px-4 py-2.5 text-left
+           text-[11px] font-bold uppercase tracking-[0.5px] text-sage-600;
   }
 
   .td {
-    @apply px-4 py-3 text-sm text-ink-200;
+    @apply px-4 py-3 text-[13px] text-ink-900;
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Recharts an das dunkle Design anpassen
+   Recharts an das helle Design anpassen
 --------------------------------------------------------------------------- */
 
 .recharts-cartesian-axis-tick text {
-  fill: #8591aa;
+  fill: #8f8781;
   font-size: 11px;
 }
 
 .recharts-cartesian-grid line {
-  stroke: #3a4052;
+  stroke: #e8e4e0;
 }
 
 .recharts-tooltip-wrapper:focus {

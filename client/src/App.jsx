@@ -44,7 +44,7 @@ export default function App() {
   // --- 1. Anmeldung wird geprueft ---
   if (sitzung === undefined) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-ink-950">
+      <div className="flex min-h-screen items-center justify-center bg-ink-50">
         <LoadingState text="Anmeldung wird geprüft …" />
       </div>
     );
@@ -62,7 +62,7 @@ export default function App() {
   // --- Profil wird geladen ---
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-ink-950">
+      <div className="flex min-h-screen items-center justify-center bg-ink-50">
         <LoadingState text="MailDraft AI wird geladen …" />
       </div>
     );
@@ -70,7 +70,7 @@ export default function App() {
 
   if (loadError) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-ink-950 p-6">
+      <div className="flex min-h-screen items-center justify-center bg-ink-50 p-6">
         <div className="card w-full max-w-lg">
           <ErrorState message={loadError} onRetry={() => reload().catch(() => {})} />
         </div>

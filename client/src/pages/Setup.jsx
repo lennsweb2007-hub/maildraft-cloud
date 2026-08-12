@@ -119,17 +119,17 @@ export default function Setup() {
   }[step];
 
   return (
-    <div className="min-h-screen bg-ink-950">
+    <div className="min-h-screen bg-ink-50">
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-6 py-10">
         {/* --- Kopf mit Fortschritt --- */}
         <header className="mb-8">
           <div className="mb-6 flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 text-white">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white">
               <IconMail size={21} />
             </span>
             <div>
-              <h1 className="text-lg font-semibold text-ink-50">MailDraft AI einrichten</h1>
-              <p className="text-xs text-ink-400">
+              <h1 className="text-lg font-semibold text-ink-950">MailDraft AI einrichten</h1>
+              <p className="text-xs text-ink-600">
                 Schritt {step} von {STEPS.length} &middot; {STEPS[step - 1].title}
               </p>
             </div>
@@ -144,12 +144,12 @@ export default function Setup() {
                 <li key={item.id} className="flex flex-1 flex-col gap-1.5">
                   <div
                     className={`h-1 rounded-full transition-colors ${
-                      done ? 'bg-brand-500' : active ? 'bg-brand-400' : 'bg-ink-800'
+                      done ? 'bg-brand-500' : active ? 'bg-brand-400' : 'bg-ink-200'
                     }`}
                   />
                   <span
                     className={`text-[11px] ${
-                      active ? 'font-medium text-brand-300' : 'text-ink-500'
+                      active ? 'font-medium text-brand-700' : 'text-ink-500'
                     }`}
                   >
                     {item.short}
@@ -177,7 +177,7 @@ export default function Setup() {
         </div>
 
         {/* --- Navigation --- */}
-        <footer className="mt-8 flex items-center justify-between border-t border-ink-800 pt-5">
+        <footer className="mt-8 flex items-center justify-between border-t border-ink-200 pt-5">
           <button
             type="button"
             onClick={() => setStep((current) => Math.max(1, current - 1))}
@@ -237,8 +237,8 @@ function StepWelcome({ user, onSaved }) {
 
   return (
     <div className="card p-6">
-      <h2 className="mb-2 text-xl font-semibold text-ink-50">Willkommen bei MailDraft AI</h2>
-      <p className="mb-6 text-sm leading-relaxed text-ink-300">
+      <h2 className="mb-2 text-xl font-semibold text-ink-950">Willkommen bei MailDraft AI</h2>
+      <p className="mb-6 text-sm leading-relaxed text-ink-700">
         Diese App liest Ihren Posteingang, schreibt zu jeder Kundenanfrage einen Antwortentwurf und
         legt ihn Ihnen zur Freigabe vor. Nichts wird ohne Ihren Klick versendet.
       </p>
@@ -249,9 +249,9 @@ function StepWelcome({ user, onSaved }) {
           { title: 'In Ihrem Stil', text: 'Die KI lernt aus Ihren Beispielantworten' },
           { title: 'Lokal', text: 'Alle Daten bleiben auf diesem PC' },
         ].map((item) => (
-          <div key={item.title} className="rounded-lg border border-ink-800 bg-ink-950/50 p-3.5">
-            <p className="mb-1 text-sm font-medium text-brand-300">{item.title}</p>
-            <p className="text-xs leading-relaxed text-ink-400">{item.text}</p>
+          <div key={item.title} className="rounded-lg border border-ink-200 bg-ink-50/50 p-3.5">
+            <p className="mb-1 text-sm font-medium text-brand-700">{item.title}</p>
+            <p className="text-xs leading-relaxed text-ink-600">{item.text}</p>
           </div>
         ))}
       </div>
@@ -330,8 +330,8 @@ function StepAccounts({ accounts, onChanged }) {
   return (
     <div className="space-y-4">
       <div className="card p-6">
-        <h2 className="mb-2 text-lg font-semibold text-ink-50">E-Mail-Konto verbinden</h2>
-        <p className="mb-5 text-sm leading-relaxed text-ink-300">
+        <h2 className="mb-2 text-lg font-semibold text-ink-950">E-Mail-Konto verbinden</h2>
+        <p className="mb-5 text-sm leading-relaxed text-ink-700">
           Mindestens ein Konto wird benötigt. Sie können später jederzeit weitere hinzufügen -
           mehrere Postfächer laufen parallel.
         </p>
@@ -345,14 +345,14 @@ function StepAccounts({ accounts, onChanged }) {
               onClick={() =>
                 provider.id === 'imap' ? setShowImapForm(true) : startOAuth(provider.id)
               }
-              className="rounded-lg border border-ink-700 bg-ink-950/50 p-4 text-left transition-colors hover:border-brand-500 hover:bg-ink-900 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-ink-700"
+              className="rounded-lg border border-ink-300 bg-ink-50/50 p-4 text-left transition-colors hover:border-brand-500 hover:bg-ink-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-ink-300"
             >
               <div className="mb-2 flex items-center gap-2">
-                <IconLink size={16} className="text-brand-400" />
-                <span className="text-sm font-medium text-ink-100">{provider.name}</span>
-                {connecting === provider.id && <Spinner size={13} className="text-brand-400" />}
+                <IconLink size={16} className="text-brand-600" />
+                <span className="text-sm font-medium text-ink-900">{provider.name}</span>
+                {connecting === provider.id && <Spinner size={13} className="text-brand-600" />}
               </div>
-              <p className="text-xs leading-relaxed text-ink-400">
+              <p className="text-xs leading-relaxed text-ink-600">
                 {provider.configured
                   ? provider.id === 'imap'
                     ? 'Zugangsdaten selbst eingeben'
@@ -410,17 +410,17 @@ function OAuthSetupGuide({ provider }) {
   }
 
   return (
-    <div className="rounded-lg border border-ink-700 bg-ink-950/40">
+    <div className="rounded-lg border border-ink-300 bg-ink-50/40">
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
         className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
       >
         <span className="min-w-0">
-          <span className="block text-sm font-medium text-ink-100">
+          <span className="block text-sm font-medium text-ink-900">
             {provider.name} einrichten
           </span>
-          <span className="block text-xs text-ink-400">
+          <span className="block text-xs text-ink-600">
             Einmalig etwa zehn Minuten. Danach melden Sie sich direkt bei{' '}
             {provider.id === 'gmail' ? 'Google' : 'Microsoft'} an - Ihr Passwort sieht diese App
             nie.
@@ -428,16 +428,16 @@ function OAuthSetupGuide({ provider }) {
         </span>
         <IconChevronDown
           size={17}
-          className={`shrink-0 text-ink-400 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`shrink-0 text-ink-600 transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </button>
 
       {open && (
-        <div className="space-y-4 border-t border-ink-800 px-4 py-4">
+        <div className="space-y-4 border-t border-ink-200 px-4 py-4">
           <ol className="space-y-2.5">
             {provider.setupSteps.map((step, index) => (
-              <li key={step} className="flex gap-2.5 text-xs leading-relaxed text-ink-300">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink-800 text-[11px] font-semibold text-ink-200">
+              <li key={step} className="flex gap-2.5 text-xs leading-relaxed text-ink-700">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink-200 text-[11px] font-semibold text-ink-800">
                   {index + 1}
                 </span>
                 <span>{step}</span>
@@ -448,7 +448,7 @@ function OAuthSetupGuide({ provider }) {
           <div>
             <p className="label text-xs">Diese Adresse dort eintragen</p>
             <div className="flex gap-2">
-              <code className="flex-1 overflow-x-auto rounded-lg border border-ink-700 bg-ink-950 px-3 py-2 font-mono text-xs text-brand-300">
+              <code className="flex-1 overflow-x-auto rounded-lg border border-ink-300 bg-ink-50 px-3 py-2 font-mono text-xs text-brand-700">
                 {provider.redirectUri}
               </code>
               <button type="button" onClick={copyRedirect} className="btn-secondary shrink-0 text-xs">
@@ -465,7 +465,7 @@ function OAuthSetupGuide({ provider }) {
 
           <div>
             <p className="label text-xs">Danach in die Datei .env eintragen</p>
-            <pre className="overflow-x-auto rounded-lg border border-ink-700 bg-ink-950 px-3 py-2 font-mono text-xs text-ink-300">
+            <pre className="overflow-x-auto rounded-lg border border-ink-300 bg-ink-50 px-3 py-2 font-mono text-xs text-ink-700">
               {provider.envKeys.map((key) => `${key}=...`).join('\n')}
             </pre>
             <p className="hint">
@@ -539,11 +539,11 @@ function AccountList({ accounts, onChanged, compact = false }) {
 
   return (
     <>
-      <div className="card divide-y divide-ink-800">
+      <div className="card divide-y divide-ink-200">
         {accounts.map((account) => (
           <div key={account.id} className="flex items-center gap-4 p-4">
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-ink-100">{account.email_address}</p>
+              <p className="truncate text-sm font-medium text-ink-900">{account.email_address}</p>
               <div className="mt-1 flex items-center gap-3">
                 <span className="text-xs uppercase tracking-wide text-ink-500">
                   {account.provider}
@@ -551,7 +551,7 @@ function AccountList({ accounts, onChanged, compact = false }) {
                 <StatusDot status={account.status} />
               </div>
               {account.last_error && (
-                <p className="mt-1.5 text-xs leading-relaxed text-red-400">{account.last_error}</p>
+                <p className="mt-1.5 text-xs leading-relaxed text-red-600">{account.last_error}</p>
               )}
             </div>
 
@@ -567,7 +567,7 @@ function AccountList({ accounts, onChanged, compact = false }) {
               <button
                 type="button"
                 onClick={() => setToRemove(account)}
-                className="btn-ghost text-xs text-red-400 hover:bg-red-500/10"
+                className="btn-ghost text-xs text-red-600 hover:bg-red-500/10"
               >
                 <IconTrash size={14} />
               </button>
@@ -645,8 +645,8 @@ function ImapForm({ onCancel, onSaved }) {
     <form onSubmit={handleSubmit(onSubmit)} className="card space-y-4 p-6">
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="text-base font-semibold text-ink-50">IMAP-Konto einrichten</h3>
-          <p className="mt-1 text-xs text-ink-400">
+          <h3 className="text-base font-semibold text-ink-950">IMAP-Konto einrichten</h3>
+          <p className="mt-1 text-xs text-ink-600">
             Funktioniert mit GMX, Web.de, IONOS, Strato, Posteo und jedem anderen Anbieter.
           </p>
         </div>
@@ -669,7 +669,7 @@ function ImapForm({ onCancel, onSaved }) {
             pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Das sieht nicht nach einer gültigen Adresse aus.' },
           })}
         />
-        {errors.email_address && <p className="hint text-red-400">{errors.email_address.message}</p>}
+        {errors.email_address && <p className="hint text-red-600">{errors.email_address.message}</p>}
       </div>
 
       <div>
@@ -683,7 +683,7 @@ function ImapForm({ onCancel, onSaved }) {
           autoComplete="off"
           {...register('password', { required: 'Das Passwort wird benötigt.' })}
         />
-        {errors.password && <p className="hint text-red-400">{errors.password.message}</p>}
+        {errors.password && <p className="hint text-red-600">{errors.password.message}</p>}
         <p className="hint">
           Wird verschlüsselt auf diesem PC gespeichert. Bei aktiver Zwei-Faktor-Anmeldung wird ein
           App-Passwort des Anbieters benötigt, nicht das normale Kennwort.
@@ -701,7 +701,7 @@ function ImapForm({ onCancel, onSaved }) {
             placeholder="imap.anbieter.de"
             {...register('imap_host', { required: 'Der IMAP-Server wird benötigt.' })}
           />
-          {errors.imap_host && <p className="hint text-red-400">{errors.imap_host.message}</p>}
+          {errors.imap_host && <p className="hint text-red-600">{errors.imap_host.message}</p>}
         </div>
         <div>
           <label className="label" htmlFor="imap-port">
@@ -784,8 +784,8 @@ function StepScenarios({ scenarios, onChanged }) {
   return (
     <div className="space-y-4">
       <div className="card p-6">
-        <h2 className="mb-2 text-lg font-semibold text-ink-50">Szenarien definieren</h2>
-        <p className="text-sm leading-relaxed text-ink-300">
+        <h2 className="mb-2 text-lg font-semibold text-ink-950">Szenarien definieren</h2>
+        <p className="text-sm leading-relaxed text-ink-700">
           Ein Szenario ist eine Beispielantwort für einen wiederkehrenden Fall. Die KI orientiert
           sich daran - je genauer Ihre Beispiele Ihren eigenen Stil treffen, desto weniger müssen
           Sie später nachbessern. Drei bis fünf Szenarien sind ein guter Anfang.
@@ -795,8 +795,8 @@ function StepScenarios({ scenarios, onChanged }) {
       {/* Vorlagen */}
       {SCENARIO_TEMPLATES.some((template) => !usedTitles.has(template.title)) && (
         <div className="card p-5">
-          <p className="mb-3 flex items-center gap-2 text-sm font-medium text-ink-200">
-            <IconSparkles size={15} className="text-brand-400" />
+          <p className="mb-3 flex items-center gap-2 text-sm font-medium text-ink-800">
+            <IconSparkles size={15} className="text-brand-600" />
             Vorlagen zum schnellen Start
           </p>
           <div className="flex flex-wrap gap-2">
@@ -822,18 +822,18 @@ function StepScenarios({ scenarios, onChanged }) {
 
       {/* Liste */}
       {scenarios.length > 0 && (
-        <div className="card divide-y divide-ink-800">
+        <div className="card divide-y divide-ink-200">
           {scenarios.map((scenario) => (
             <div key={scenario.id} className="p-4">
               <div className="mb-2 flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-ink-100">{scenario.title}</p>
+                  <p className="text-sm font-medium text-ink-900">{scenario.title}</p>
                   {scenario.trigger_keywords.length > 0 && (
                     <div className="mt-1.5 flex flex-wrap gap-1">
                       {scenario.trigger_keywords.map((keyword) => (
                         <span
                           key={keyword}
-                          className="rounded bg-ink-800 px-1.5 py-0.5 text-[11px] text-ink-300"
+                          className="rounded bg-ink-200 px-1.5 py-0.5 text-[11px] text-ink-700"
                         >
                           {keyword}
                         </span>
@@ -848,13 +848,13 @@ function StepScenarios({ scenarios, onChanged }) {
                   <button
                     type="button"
                     onClick={() => remove(scenario)}
-                    className="btn-ghost text-xs text-red-400 hover:bg-red-500/10"
+                    className="btn-ghost text-xs text-red-600 hover:bg-red-500/10"
                   >
                     <IconTrash size={14} />
                   </button>
                 </div>
               </div>
-              <p className="whitespace-pre-wrap text-xs leading-relaxed text-ink-400">
+              <p className="whitespace-pre-wrap text-xs leading-relaxed text-ink-600">
                 {scenario.example_response.length > 220
                   ? `${scenario.example_response.slice(0, 220)}...`
                   : scenario.example_response}
@@ -925,7 +925,7 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="card space-y-4 p-6">
       <div className="flex items-start justify-between">
-        <h3 className="text-base font-semibold text-ink-50">
+        <h3 className="text-base font-semibold text-ink-950">
           {scenario ? 'Szenario bearbeiten' : 'Neues Szenario'}
         </h3>
         <button type="button" onClick={onCancel} className="btn-ghost p-1">
@@ -943,7 +943,7 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
           placeholder="z.B. Retourenfrage"
           {...register('title', { required: 'Ein Titel wird benötigt.' })}
         />
-        {errors.title && <p className="hint text-red-400">{errors.title.message}</p>}
+        {errors.title && <p className="hint text-red-600">{errors.title.message}</p>}
       </div>
 
       <div>
@@ -991,7 +991,7 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
           })}
         />
         {errors.example_response && (
-          <p className="hint text-red-400">{errors.example_response.message}</p>
+          <p className="hint text-red-600">{errors.example_response.message}</p>
         )}
         <p className="hint">
           Schreiben Sie so, wie Sie tatsächlich antworten würden - ohne Anrede und ohne Signatur.
@@ -1069,8 +1069,8 @@ function StepTone({ user, onSaved }) {
   return (
     <div className="space-y-4">
       <div className="card p-6">
-        <h2 className="mb-2 text-lg font-semibold text-ink-50">Tonfall wählen</h2>
-        <p className="mb-5 text-sm leading-relaxed text-ink-300">
+        <h2 className="mb-2 text-lg font-semibold text-ink-950">Tonfall wählen</h2>
+        <p className="mb-5 text-sm leading-relaxed text-ink-700">
           Der Ton gilt für alle Entwürfe. Einzelne Szenarien können später davon abweichen.
         </p>
 
@@ -1081,7 +1081,7 @@ function StepTone({ user, onSaved }) {
               className={`flex cursor-pointer gap-3 rounded-lg border p-4 transition-colors ${
                 tone === option.id
                   ? 'border-brand-500 bg-brand-500/10'
-                  : 'border-ink-700 bg-ink-950/40 hover:border-ink-600'
+                  : 'border-ink-300 bg-ink-50/40 hover:border-ink-400'
               }`}
             >
               <input
@@ -1096,10 +1096,10 @@ function StepTone({ user, onSaved }) {
                 className="mt-0.5 accent-brand-500"
               />
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-ink-100">{option.name}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-ink-400">{option.description}</p>
+                <p className="text-sm font-medium text-ink-900">{option.name}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-ink-600">{option.description}</p>
                 {option.sample && tone === option.id && (
-                  <pre className="mt-2.5 whitespace-pre-wrap rounded bg-ink-950 p-2.5 font-mono text-[11px] leading-relaxed text-ink-300">
+                  <pre className="mt-2.5 whitespace-pre-wrap rounded bg-ink-50 p-2.5 font-mono text-[11px] leading-relaxed text-ink-700">
                     {option.sample}
                   </pre>
                 )}
@@ -1188,8 +1188,8 @@ function StepCategories({ categories, accounts, scenarios, onChanged }) {
   return (
     <div className="space-y-4">
       <div className="card p-6">
-        <h2 className="mb-2 text-lg font-semibold text-ink-50">Kategorien</h2>
-        <p className="mb-5 text-sm leading-relaxed text-ink-300">
+        <h2 className="mb-2 text-lg font-semibold text-ink-950">Kategorien</h2>
+        <p className="mb-5 text-sm leading-relaxed text-ink-700">
           Jede eingehende Mail wird automatisch einer Kategorie zugeordnet. Die vier
           Standardkategorien decken die meisten Fälle ab - ergänzen Sie, was Ihnen fehlt.
         </p>
@@ -1201,7 +1201,7 @@ function StepCategories({ categories, accounts, scenarios, onChanged }) {
               <button
                 type="button"
                 onClick={() => remove(category)}
-                className="rounded p-0.5 text-ink-500 opacity-0 transition-opacity hover:text-red-400 group-hover:opacity-100"
+                className="rounded p-0.5 text-ink-500 opacity-0 transition-opacity hover:text-red-600 group-hover:opacity-100"
                 aria-label={`${category.name} löschen`}
               >
                 <IconX size={12} />
@@ -1232,7 +1232,7 @@ function StepCategories({ categories, accounts, scenarios, onChanged }) {
 
       {/* Zusammenfassung */}
       <div className="card p-6">
-        <h3 className="mb-4 text-base font-semibold text-ink-50">Alles bereit</h3>
+        <h3 className="mb-4 text-base font-semibold text-ink-950">Alles bereit</h3>
 
         <dl className="space-y-2.5 text-sm">
           <SummaryRow
@@ -1266,11 +1266,11 @@ function StepCategories({ categories, accounts, scenarios, onChanged }) {
 
 function SummaryRow({ label, value, ok }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-ink-800 pb-2.5 last:border-0">
-      <dt className="text-ink-400">{label}</dt>
+    <div className="flex items-center justify-between gap-4 border-b border-ink-200 pb-2.5 last:border-0">
+      <dt className="text-ink-600">{label}</dt>
       <dd className="flex min-w-0 items-center gap-2">
-        <span className="truncate text-ink-100">{value}</span>
-        <span className={ok ? 'text-emerald-400' : 'text-amber-400'}>
+        <span className="truncate text-ink-900">{value}</span>
+        <span className={ok ? 'text-emerald-600' : 'text-amber-600'}>
           {ok ? <IconCheck size={15} /> : <IconX size={15} />}
         </span>
       </dd>

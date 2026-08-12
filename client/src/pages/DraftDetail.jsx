@@ -29,7 +29,7 @@ import {
   Notice,
   Spinner,
 } from '../components/ui';
-import { colorFor, formatDateTime, initialsOf } from '../utils/format';
+import { formatDateTime, initialsOf } from '../utils/format';
 
 export default function DraftDetail() {
   const { id } = useParams();
@@ -199,8 +199,8 @@ export default function DraftDetail() {
             <IconArrowLeft size={17} />
           </button>
           <div className="min-w-0">
-            <h1 className="truncate text-lg font-semibold text-ink-50">{draft.subject}</h1>
-            <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-ink-400">
+            <h1 className="truncate text-lg font-semibold text-ink-950">{draft.subject}</h1>
+            <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-ink-600">
               <span>
                 von {draft.from_name ? `${draft.from_name} (${draft.from_email})` : draft.from_email}
               </span>
@@ -252,7 +252,7 @@ export default function DraftDetail() {
               type="button"
               onClick={() => setConfirmDelete(true)}
               disabled={sending}
-              className="btn-ghost text-red-400 hover:bg-red-500/10"
+              className="btn-ghost text-red-600 hover:bg-red-500/10"
             >
               <IconTrash size={16} />
             </button>
@@ -290,22 +290,27 @@ export default function DraftDetail() {
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Kundenmail */}
         <section className="card flex flex-col">
-          <header className="flex items-center gap-2.5 border-b border-ink-800 px-4 py-3">
+          <header className="flex items-center gap-3 border-b border-ink-200 px-6 py-4">
+            {/*
+              In der Liste bekommt jeder Absender eine eigene Farbe, damit man
+              ihn beim Durchscrollen wiedererkennt. Hier steht nur eine einzige
+              Mail - der Wiedererkennungswert entfaellt, und die feste
+              Akzentfarbe haelt die Ansicht ruhig.
+            */}
             <div
-              className="flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold text-white"
-              style={{ backgroundColor: colorFor(draft.from_email) }}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-500 text-[11px] font-semibold text-white"
               aria-hidden="true"
             >
               {initialsOf(draft.from_name || draft.from_email)}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-ink-100">Nachricht der Kundin</p>
-              <p className="truncate text-xs text-ink-500">{draft.from_email}</p>
+              <p className="text-sm font-medium text-ink-950">Nachricht der Kundin</p>
+              <p className="truncate text-xs text-ink-600">{draft.from_email}</p>
             </div>
           </header>
 
-          <div className="flex-1 overflow-y-auto p-4">
-            <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-ink-300">
+          <div className="flex-1 overflow-y-auto p-6">
+            <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-ink-950">
               {draft.body_original || '(Die Mail enthielt keinen lesbaren Text.)'}
             </pre>
           </div>
@@ -313,14 +318,14 @@ export default function DraftDetail() {
 
         {/* Entwurf */}
         <section className="card flex flex-col">
-          <header className="flex items-center justify-between gap-3 border-b border-ink-800 px-4 py-3">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-white">
+          <header className="flex items-center justify-between gap-3 border-b border-ink-200 px-6 py-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-400 text-white">
                 <IconMail size={14} />
               </div>
               <div>
-                <p className="text-sm font-medium text-ink-100">Ihre Antwort</p>
-                <p className="text-xs text-ink-500">an {draft.to_email}</p>
+                <p className="text-sm font-medium text-ink-950">Ihre Antwort</p>
+                <p className="text-xs text-ink-600">an {draft.to_email}</p>
               </div>
             </div>
 

@@ -43,13 +43,13 @@ export default function Settings() {
   return (
     <div className="p-6">
       <header className="mb-5">
-        <h1 className="text-lg font-semibold text-ink-50">Einstellungen</h1>
-        <p className="mt-0.5 text-sm text-ink-400">
+        <h1 className="text-lg font-semibold text-ink-950">Einstellungen</h1>
+        <p className="mt-0.5 text-sm text-ink-600">
           Konten, Antwortvorlagen und Verhalten der App
         </p>
       </header>
 
-      <div className="mb-5 flex flex-wrap gap-1 border-b border-ink-800">
+      <div className="mb-5 flex flex-wrap gap-1 border-b border-ink-200">
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
@@ -57,8 +57,8 @@ export default function Settings() {
             onClick={() => setTab(id)}
             className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-medium transition-colors ${
               tab === id
-                ? 'border-brand-500 text-brand-300'
-                : 'border-transparent text-ink-400 hover:text-ink-200'
+                ? 'border-brand-500 text-brand-700'
+                : 'border-transparent text-ink-600 hover:text-ink-800'
             }`}
           >
             <Icon size={15} />
@@ -144,7 +144,7 @@ function AccountsTab() {
       <AccountList accounts={accounts} onChanged={load} />
 
       <div className="card p-5">
-        <h2 className="mb-3 text-sm font-semibold text-ink-100">Weiteres Konto verbinden</h2>
+        <h2 className="mb-3 text-sm font-semibold text-ink-900">Weiteres Konto verbinden</h2>
         <div className="grid gap-2.5 sm:grid-cols-3">
           {providers.map((provider) => (
             <button
@@ -154,13 +154,13 @@ function AccountsTab() {
               onClick={() =>
                 provider.id === 'imap' ? setShowImapForm(true) : startOAuth(provider.id)
               }
-              className="rounded-lg border border-ink-700 bg-ink-950/50 p-3.5 text-left transition-colors hover:border-brand-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-ink-700"
+              className="rounded-lg border border-ink-300 bg-ink-50/50 p-3.5 text-left transition-colors hover:border-brand-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-ink-300"
             >
-              <span className="mb-1 flex items-center gap-2 text-sm font-medium text-ink-100">
-                <IconLink size={15} className="text-brand-400" />
+              <span className="mb-1 flex items-center gap-2 text-sm font-medium text-ink-900">
+                <IconLink size={15} className="text-brand-600" />
                 {provider.name}
               </span>
-              <span className="block text-xs leading-relaxed text-ink-400">
+              <span className="block text-xs leading-relaxed text-ink-600">
                 {provider.configured ? 'Verbinden' : provider.hint}
               </span>
             </button>
@@ -239,18 +239,18 @@ function ScenariosTab() {
       </Notice>
 
       {scenarios.length > 0 && (
-        <div className="card divide-y divide-ink-800">
+        <div className="card divide-y divide-ink-200">
           {scenarios.map((scenario) => (
             <div key={scenario.id} className="p-4">
               <div className="mb-2 flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-ink-100">{scenario.title}</p>
+                  <p className="text-sm font-medium text-ink-900">{scenario.title}</p>
                   {scenario.trigger_keywords.length > 0 && (
                     <div className="mt-1.5 flex flex-wrap gap-1">
                       {scenario.trigger_keywords.map((keyword) => (
                         <span
                           key={keyword}
-                          className="rounded bg-ink-800 px-1.5 py-0.5 text-[11px] text-ink-300"
+                          className="rounded bg-ink-200 px-1.5 py-0.5 text-[11px] text-ink-700"
                         >
                           {keyword}
                         </span>
@@ -269,13 +269,13 @@ function ScenariosTab() {
                   <button
                     type="button"
                     onClick={() => setToDelete(scenario)}
-                    className="btn-ghost text-xs text-red-400 hover:bg-red-500/10"
+                    className="btn-ghost text-xs text-red-600 hover:bg-red-500/10"
                   >
                     <IconTrash size={14} />
                   </button>
                 </div>
               </div>
-              <p className="whitespace-pre-wrap text-xs leading-relaxed text-ink-400">
+              <p className="whitespace-pre-wrap text-xs leading-relaxed text-ink-600">
                 {scenario.example_response.length > 260
                   ? `${scenario.example_response.slice(0, 260)}...`
                   : scenario.example_response}
@@ -381,7 +381,7 @@ function CategoriesTab() {
         Farbsehschwäche lesbar.
       </Notice>
 
-      <div className="card divide-y divide-ink-800">
+      <div className="card divide-y divide-ink-200">
         {categories.map((category) => (
           <div key={category.id} className="flex items-center gap-3 p-3.5">
             {editing === category.id ? (
@@ -415,7 +415,7 @@ function CategoriesTab() {
             <button
               type="button"
               onClick={() => setToDelete(category)}
-              className="btn-ghost p-1.5 text-red-400 hover:bg-red-500/10"
+              className="btn-ghost p-1.5 text-red-600 hover:bg-red-500/10"
               aria-label={`${category.name} löschen`}
             >
               <IconTrash size={15} />
@@ -556,7 +556,7 @@ function GeneralTab() {
     <div className="space-y-4">
       {/* --- Antwortverhalten --- */}
       <section className="card space-y-4 p-5">
-        <h2 className="text-sm font-semibold text-ink-100">Antwortverhalten</h2>
+        <h2 className="text-sm font-semibold text-ink-900">Antwortverhalten</h2>
 
         <div>
           <label className="label" htmlFor="set-brand">
@@ -580,8 +580,8 @@ function GeneralTab() {
                 onClick={() => set('tone', tone.id)}
                 className={`rounded-lg border px-3 py-1.5 text-sm transition-colors ${
                   form.tone === tone.id
-                    ? 'border-brand-500 bg-brand-500/15 text-brand-200'
-                    : 'border-ink-700 text-ink-300 hover:border-ink-600'
+                    ? 'border-brand-500 bg-brand-500/15 text-brand-700'
+                    : 'border-ink-300 text-ink-700 hover:border-ink-400'
                 }`}
               >
                 {tone.label}
@@ -623,7 +623,7 @@ function GeneralTab() {
 
       {/* --- Relevanzprüfung --- */}
       <section className="card space-y-4 p-5">
-        <h2 className="text-sm font-semibold text-ink-100">Relevanzprüfung</h2>
+        <h2 className="text-sm font-semibold text-ink-900">Relevanzprüfung</h2>
 
         <label className="flex cursor-pointer items-start gap-3">
           <input
@@ -633,10 +633,10 @@ function GeneralTab() {
             className="mt-0.5 h-4 w-4 accent-brand-500"
           />
           <span>
-            <span className="block text-sm text-ink-100">
+            <span className="block text-sm text-ink-900">
               Vor der Entwurfserstellung prüfen, ob es überhaupt Kundenservice ist
             </span>
-            <span className="block text-xs leading-relaxed text-ink-400">
+            <span className="block text-xs leading-relaxed text-ink-600">
               Rechnungen, Zahlungsbenachrichtigungen, Newsletter und Werbung bekommen keinen
               Entwurf, sondern landen im Reiter &bdquo;Aussortiert&ldquo;. Ohne diese Prüfung
               erzeugt die App zu jeder ungelesenen Mail eine Antwort.
@@ -691,7 +691,7 @@ function GeneralTab() {
 
       {/* --- Abruf --- */}
       <section className="card space-y-4 p-5">
-        <h2 className="text-sm font-semibold text-ink-100">Automatischer Abruf</h2>
+        <h2 className="text-sm font-semibold text-ink-900">Automatischer Abruf</h2>
 
         <label className="flex cursor-pointer items-start gap-3">
           <input
@@ -701,10 +701,10 @@ function GeneralTab() {
             className="mt-0.5 h-4 w-4 accent-brand-500"
           />
           <span>
-            <span className="block text-sm text-ink-100">
+            <span className="block text-sm text-ink-900">
               E-Mails automatisch im Hintergrund abrufen
             </span>
-            <span className="block text-xs text-ink-400">
+            <span className="block text-xs text-ink-600">
               Ist das aus, passiert nur beim Klick auf &bdquo;Jetzt prüfen&ldquo; etwas.
             </span>
           </span>
@@ -745,8 +745,8 @@ function GeneralTab() {
       <section className="card space-y-3 p-5">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="text-sm font-semibold text-ink-100">KI-Verbindung</h2>
-            <p className="mt-0.5 text-xs text-ink-400">
+            <h2 className="text-sm font-semibold text-ink-900">KI-Verbindung</h2>
+            <p className="mt-0.5 text-xs text-ink-600">
               Modell: <span className="font-mono">{system?.aiModel}</span>
             </p>
           </div>
@@ -777,20 +777,20 @@ function GeneralTab() {
 
       {/* --- Daten --- */}
       <section className="card space-y-4 p-5">
-        <h2 className="text-sm font-semibold text-ink-100">Daten und Sicherung</h2>
+        <h2 className="text-sm font-semibold text-ink-900">Daten und Sicherung</h2>
 
         <dl className="space-y-1.5 text-xs">
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-400">Angemeldet als</dt>
-            <dd className="truncate text-ink-300">{user?.email}</dd>
+            <dt className="text-ink-600">Angemeldet als</dt>
+            <dd className="truncate text-ink-700">{user?.email}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-400">KI-Modell (Entwürfe)</dt>
-            <dd className="truncate font-mono text-ink-300">{system?.aiModel}</dd>
+            <dt className="text-ink-600">KI-Modell (Entwürfe)</dt>
+            <dd className="truncate font-mono text-ink-700">{system?.aiModel}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-400">KI-Modell (Relevanzprüfung)</dt>
-            <dd className="truncate font-mono text-ink-300">{system?.aiTriageModel}</dd>
+            <dt className="text-ink-600">KI-Modell (Relevanzprüfung)</dt>
+            <dd className="truncate font-mono text-ink-700">{system?.aiTriageModel}</dd>
           </div>
         </dl>
 
@@ -804,8 +804,8 @@ function GeneralTab() {
 
       {/* --- Zurücksetzen --- */}
       <section className="card p-5">
-        <h2 className="mb-1 text-sm font-semibold text-ink-100">Einrichtung erneut durchlaufen</h2>
-        <p className="mb-3 text-xs leading-relaxed text-ink-400">
+        <h2 className="mb-1 text-sm font-semibold text-ink-900">Einrichtung erneut durchlaufen</h2>
+        <p className="mb-3 text-xs leading-relaxed text-ink-600">
           Startet den Einrichtungsassistenten neu. Konten, Szenarien, Entwürfe und die Historie
           bleiben dabei vollständig erhalten.
         </p>

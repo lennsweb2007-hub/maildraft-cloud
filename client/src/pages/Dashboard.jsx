@@ -266,7 +266,7 @@ export default function Dashboard() {
               )} % des Posteingangs`
             : 'kein Rauschen bisher',
         icon: IconFilter,
-        accent: 'text-ink-400',
+        accent: 'text-ink-600',
       },
     ],
     [counts.pending, summary]
@@ -309,7 +309,7 @@ export default function Dashboard() {
 
       {/* --- Filterleiste --- */}
       <div className="mb-4 flex flex-wrap items-center gap-3">
-        <div className="flex rounded-lg border border-ink-800 bg-ink-900/50 p-0.5">
+        <div className="flex rounded-lg border border-ink-200 bg-ink-100/50 p-0.5">
           {STATUS_TABS.map((tab) => (
             <button
               key={tab.id}
@@ -318,7 +318,7 @@ export default function Dashboard() {
               className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
                 status === tab.id
                   ? 'bg-brand-600 text-white'
-                  : 'text-ink-300 hover:bg-ink-800 hover:text-ink-100'
+                  : 'text-ink-700 hover:bg-ink-200 hover:text-ink-900'
               }`}
             >
               {tab.label}
@@ -466,7 +466,7 @@ function DraftRow({ draft, busy, onOpen, onSend, onDelete, onRestore, onApprove,
     draft.relevance_confidence < 0.75;
 
   return (
-    <article className="card group p-4 transition-colors hover:border-ink-700">
+    <article className="card group p-4 transition-colors hover:border-ink-300">
       <div className="flex items-start gap-4">
         {/* Absender-Kreis */}
         <div
@@ -480,7 +480,7 @@ function DraftRow({ draft, busy, onOpen, onSend, onDelete, onRestore, onApprove,
         {/* Inhalt */}
         <button type="button" onClick={onOpen} className="min-w-0 flex-1 text-left">
           <div className="mb-1 flex flex-wrap items-center gap-2">
-            <span className="truncate text-sm font-medium text-ink-100">
+            <span className="truncate text-sm font-medium text-ink-900">
               {draft.from_name || draft.from_email}
             </span>
             {draft.category_name && (
@@ -492,35 +492,35 @@ function DraftRow({ draft, busy, onOpen, onSend, onDelete, onRestore, onApprove,
               />
             )}
             {isIgnored && draft.relevance_kind && (
-              <span className="badge bg-ink-700/60 px-1.5 py-0.5 text-[11px] text-ink-300">
+              <span className="badge bg-ink-300/60 px-1.5 py-0.5 text-[11px] text-ink-700">
                 {RELEVANCE_LABELS[draft.relevance_kind] || draft.relevance_kind}
               </span>
             )}
             {unsicher && (
-              <span className="badge bg-amber-500/15 px-1.5 py-0.5 text-[11px] text-amber-300">
+              <span className="badge bg-amber-500/15 px-1.5 py-0.5 text-[11px] text-amber-700">
                 unsicher
               </span>
             )}
             {!draft.ai_generated && !isIgnored && (
-              <span className="badge bg-amber-500/15 px-1.5 py-0.5 text-[11px] text-amber-300">
+              <span className="badge bg-amber-500/15 px-1.5 py-0.5 text-[11px] text-amber-700">
                 Vorlage
               </span>
             )}
             {draft.send_error && (
-              <span className="badge bg-red-500/15 px-1.5 py-0.5 text-[11px] text-red-300">
+              <span className="badge bg-red-500/15 px-1.5 py-0.5 text-[11px] text-red-700">
                 Versand fehlgeschlagen
               </span>
             )}
           </div>
 
-          <p className="mb-1.5 truncate text-sm text-ink-200">{draft.subject}</p>
+          <p className="mb-1.5 truncate text-sm text-ink-800">{draft.subject}</p>
 
           {isIgnored ? (
             <p className="text-xs leading-relaxed text-ink-500">
               {draft.relevance_reason || 'Keine Begründung hinterlegt.'}
             </p>
           ) : (
-            <p className="text-xs leading-relaxed text-ink-400">{truncate(draft.body_draft, 160)}</p>
+            <p className="text-xs leading-relaxed text-ink-600">{truncate(draft.body_draft, 160)}</p>
           )}
         </button>
 
@@ -559,7 +559,7 @@ function DraftRow({ draft, busy, onOpen, onSend, onDelete, onRestore, onApprove,
                   type="button"
                   onClick={onDelete}
                   disabled={busy}
-                  className="btn-ghost px-2 py-1 text-xs text-red-400 hover:bg-red-500/10"
+                  className="btn-ghost px-2 py-1 text-xs text-red-600 hover:bg-red-500/10"
                   title="Entwurf verwerfen"
                 >
                   <IconTrash size={13} />

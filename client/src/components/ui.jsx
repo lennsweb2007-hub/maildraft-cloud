@@ -36,7 +36,7 @@ export function Spinner({ size = 18, className = '' }) {
 
 export function LoadingState({ text = 'Wird geladen ...' }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 py-16 text-ink-400">
+    <div className="flex flex-col items-center justify-center gap-3 py-16 text-ink-600">
       <Spinner size={26} />
       <p className="text-sm">{text}</p>
     </div>
@@ -45,7 +45,7 @@ export function LoadingState({ text = 'Wird geladen ...' }) {
 
 /** Platzhalter während des Ladens - ruhiger als ein springender Spinner. */
 export function Skeleton({ className = '' }) {
-  return <div className={`animate-pulse rounded bg-ink-800 ${className}`} />;
+  return <div className={`animate-pulse rounded bg-ink-200 ${className}`} />;
 }
 
 // ---------------------------------------------------------------------------
@@ -56,12 +56,12 @@ export function EmptyState({ icon: Icon, title, description, action }) {
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
       {Icon && (
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-ink-800 text-ink-400">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-ink-200 text-ink-600">
           <Icon size={26} />
         </div>
       )}
-      <h3 className="mb-1.5 text-base font-semibold text-ink-100">{title}</h3>
-      {description && <p className="max-w-md text-sm leading-relaxed text-ink-400">{description}</p>}
+      <h3 className="mb-1.5 text-base font-semibold text-ink-900">{title}</h3>
+      {description && <p className="max-w-md text-sm leading-relaxed text-ink-600">{description}</p>}
       {action && <div className="mt-5">{action}</div>}
     </div>
   );
@@ -70,11 +70,11 @@ export function EmptyState({ icon: Icon, title, description, action }) {
 export function ErrorState({ message, onRetry }) {
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10 text-red-400">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10 text-red-600">
         <IconAlert size={26} />
       </div>
-      <h3 className="mb-1.5 text-base font-semibold text-ink-100">Etwas ist schiefgelaufen</h3>
-      <p className="max-w-md text-sm leading-relaxed text-ink-400">{message}</p>
+      <h3 className="mb-1.5 text-base font-semibold text-ink-900">Etwas ist schiefgelaufen</h3>
+      <p className="max-w-md text-sm leading-relaxed text-ink-600">{message}</p>
       {onRetry && (
         <button type="button" onClick={onRetry} className="btn-secondary mt-5">
           Erneut versuchen
@@ -88,11 +88,17 @@ export function ErrorState({ message, onRetry }) {
 //  Hinweise
 // ---------------------------------------------------------------------------
 
+/*
+ * Der Akzent sitzt als Kante links, nicht als Rahmen ringsum: Auf hellem Grund
+ * wirkt ein umlaufender farbiger Rahmen wie eine Warnung, auch wenn nur ein
+ * Hinweis gemeint ist. Die Flaeche bleibt eine sehr zarte Tönung derselben
+ * Farbe, die Schrift dunkel genug zum Lesen.
+ */
 const NOTICE_STYLES = {
-  info: { box: 'border-brand-500/30 bg-brand-500/10 text-brand-200', icon: IconInfo },
-  success: { box: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200', icon: IconCheck },
-  warning: { box: 'border-amber-500/30 bg-amber-500/10 text-amber-200', icon: IconAlert },
-  error: { box: 'border-red-500/30 bg-red-500/10 text-red-200', icon: IconAlert },
+  info: { box: 'border-brand-500 bg-brand-500/[0.08] text-[#5a4a42]', icon: IconInfo },
+  success: { box: 'border-emerald-600 bg-emerald-500/[0.08] text-emerald-800', icon: IconCheck },
+  warning: { box: 'border-amber-600 bg-amber-500/[0.10] text-amber-800', icon: IconAlert },
+  error: { box: 'border-red-600 bg-red-500/[0.08] text-red-800', icon: IconAlert },
 };
 
 export function Notice({ type = 'info', title, children, action }) {
@@ -100,7 +106,7 @@ export function Notice({ type = 'info', title, children, action }) {
   const Icon = style.icon;
 
   return (
-    <div className={`flex gap-3 rounded-lg border p-3.5 text-sm ${style.box}`}>
+    <div className={`flex gap-3 rounded-r-lg border-l-[3px] py-3 pl-4 pr-4 text-sm ${style.box}`}>
       <Icon size={18} className="mt-0.5 shrink-0" />
       <div className="min-w-0 flex-1">
         {title && <p className="mb-1 font-semibold">{title}</p>}
@@ -115,7 +121,7 @@ export function Notice({ type = 'info', title, children, action }) {
 //  Kategorie-Kennzeichnung
 // ---------------------------------------------------------------------------
 
-export function CategoryBadge({ name, color = '#94a3b8', icon = 'tag', size = 'md' }) {
+export function CategoryBadge({ name, color = '#6f8f84', icon = 'tag', size = 'md' }) {
   const Icon = categoryIcon(icon);
   const isSmall = size === 'sm';
 
@@ -145,7 +151,7 @@ export function StatusDot({ status }) {
   };
 
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs text-ink-300">
+    <span className="inline-flex items-center gap-1.5 text-xs text-ink-700">
       <span className={`h-2 w-2 rounded-full ${colors[status] || 'bg-ink-500'}`} />
       {labels[status] || 'Unbekannt'}
     </span>
@@ -157,9 +163,9 @@ export function StatusDot({ status }) {
 // ---------------------------------------------------------------------------
 
 const TOAST_STYLES = {
-  success: { box: 'border-emerald-500/40 bg-emerald-950/90 text-emerald-100', icon: IconCheck },
-  error: { box: 'border-red-500/40 bg-red-950/90 text-red-100', icon: IconAlert },
-  info: { box: 'border-ink-700 bg-ink-900/95 text-ink-100', icon: IconInfo },
+  success: { box: 'border-emerald-500/40 bg-emerald-50 text-emerald-800', icon: IconCheck },
+  error: { box: 'border-red-500/40 bg-red-50 text-red-800', icon: IconAlert },
+  info: { box: 'border-ink-300 bg-ink-100/95 text-ink-900', icon: IconInfo },
 };
 
 export function ToastContainer({ toasts, onDismiss }) {
@@ -235,7 +241,9 @@ export function ConfirmDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      /* Warmes Dunkelbraun statt Schwarz und deutlich durchsichtiger: Auf
+         hellem Grund wirkt ein schwarzer Schleier wie ein Fehler. */
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink-950/30 p-4 backdrop-blur-sm"
       onClick={(event) => {
         if (event.target === event.currentTarget && !busy) onCancel();
       }}
@@ -244,10 +252,10 @@ export function ConfirmDialog({
       aria-labelledby="dialog-title"
     >
       <div className="card w-full max-w-md animate-fade-in p-6">
-        <h2 id="dialog-title" className="mb-2 text-lg font-semibold text-ink-50">
+        <h2 id="dialog-title" className="mb-2 text-lg font-semibold text-ink-950">
           {title}
         </h2>
-        {description && <p className="text-sm leading-relaxed text-ink-300">{description}</p>}
+        {description && <p className="text-sm leading-relaxed text-ink-700">{description}</p>}
 
         <div className="mt-6 flex justify-end gap-2">
           <button type="button" onClick={onCancel} disabled={busy} className="btn-secondary">
@@ -273,15 +281,15 @@ export function ConfirmDialog({
 //  Kennzahl-Kachel
 // ---------------------------------------------------------------------------
 
-export function StatTile({ label, value, hint, icon: Icon, accent = 'text-brand-300' }) {
+export function StatTile({ label, value, hint, icon: Icon, accent = 'text-brand-700' }) {
   return (
     <div className="card p-4">
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-400">{label}</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-ink-600">{label}</p>
         {Icon && <Icon size={16} className={accent} />}
       </div>
-      <p className="text-2xl font-semibold tabular-nums text-ink-50">{value}</p>
-      {hint && <p className="mt-1 text-xs text-ink-400">{hint}</p>}
+      <p className="text-2xl font-semibold tabular-nums text-ink-950">{value}</p>
+      {hint && <p className="mt-1 text-xs text-ink-600">{hint}</p>}
     </div>
   );
 }

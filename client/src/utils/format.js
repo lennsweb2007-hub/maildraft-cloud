@@ -160,7 +160,13 @@ export function initialsOf(nameOrEmail) {
  * durchgehend denselben Kreis - hilft beim Wiedererkennen in langen Listen.
  */
 export function colorFor(text) {
-  const palette = ['#6366f1', '#8b5cf6', '#ec4899', '#f97316', '#10b981', '#06b6d4', '#f59e0b'];
+  /*
+   * Gedeckte Toene rund um Terrakotta und Salbei. Alle liegen bewusst in
+   * einem engen Helligkeitsband: dunkel genug fuer weisse Initialen, und
+   * untereinander aehnlich genug, dass eine lange Liste als eine Familie
+   * wirkt statt als Farbkasten.
+   */
+  const palette = ['#c4634a', '#6f8f84', '#9a7250', '#67799a', '#94657a', '#77875c', '#b0743f'];
 
   let hash = 0;
   for (let i = 0; i < String(text || '').length; i += 1) {

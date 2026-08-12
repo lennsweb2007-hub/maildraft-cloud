@@ -38,22 +38,27 @@ import { EmptyState, ErrorState, LoadingState, StatTile } from '../components/ui
 
 /* --- Design-Token für die Charts ---------------------------------------- */
 const INK = {
-  grid: '#2c2c2a',
-  axis: '#898781',
-  surface: '#22252e',
-  border: 'rgba(255,255,255,0.10)',
-  textPrimary: '#eceef2',
-  textSecondary: '#b0b8c9',
+  grid: '#e8e4e0',
+  axis: '#8f8781',
+  surface: '#ffffff',
+  border: '#e8e4e0',
+  textPrimary: '#2a2622',
+  textSecondary: '#6f6862',
 };
 
-/** Serienfarben: erste zwei Steps der geprüften Palette, feste Reihenfolge. */
+/*
+ * Serienfarben: Terrakotta und Salbei, die beiden Akzente des Designs.
+ * Sie unterscheiden sich nicht nur im Farbton, sondern auch deutlich in der
+ * Helligkeit - damit bleiben die Reihen auch bei Rot-Gruen-Schwaeche und im
+ * Ausdruck unterscheidbar.
+ */
 const SERIES = {
-  received: '#3987e5',
-  sent: '#199e70',
+  received: '#d97757',
+  sent: '#6f8f84',
 };
 
 /** Sammelfarbe für zusammengefasste Kategorien. */
-const OTHER_COLOR = '#66738f';
+const OTHER_COLOR = '#b3aba3';
 
 const PERIODS = [
   { id: 'today', label: 'Heute' },
@@ -100,14 +105,14 @@ export default function Statistics() {
       {/* --- Kopf --- */}
       <header className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-lg font-semibold text-ink-50">Statistik</h1>
-          <p className="mt-0.5 text-sm text-ink-400">
+          <h1 className="text-lg font-semibold text-ink-950">Statistik</h1>
+          <p className="mt-0.5 text-sm text-ink-600">
             Zeitraum: {current.label} ({formatRange(current.from, current.to)})
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg border border-ink-800 bg-ink-900/50 p-0.5">
+          <div className="flex rounded-lg border border-ink-200 bg-ink-100/50 p-0.5">
             {PERIODS.map((option) => (
               <button
                 key={option.id}
@@ -116,7 +121,7 @@ export default function Statistics() {
                 className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
                   period === option.id
                     ? 'bg-brand-600 text-white'
-                    : 'text-ink-300 hover:bg-ink-800 hover:text-ink-100'
+                    : 'text-ink-700 hover:bg-ink-200 hover:text-ink-900'
                 }`}
               >
                 {option.label}
@@ -154,7 +159,7 @@ export default function Statistics() {
                   : 'noch nichts versendet'
               }
               icon={IconSend}
-              accent="text-emerald-300"
+              accent="text-emerald-700"
             />
             <StatTile
               label="Aussortiert"
@@ -165,22 +170,22 @@ export default function Statistics() {
                   : 'kein Rauschen gefiltert'
               }
               icon={IconFilter}
-              accent="text-ink-400"
+              accent="text-ink-600"
             />
             <StatTile
               label="Ø Antwortzeit"
               value={current.totals.avgResponseTimeText ?? '-'}
               hint="vom Eingang bis zum Versand"
               icon={IconClock}
-              accent="text-brand-300"
+              accent="text-brand-700"
             />
           </div>
 
           <div className="grid gap-4 xl:grid-cols-2">
             {/* --- Verlauf im gewählten Zeitraum --- */}
             <section className="card p-5">
-              <h2 className="mb-1 text-sm font-semibold text-ink-100">E-Mails pro Tag</h2>
-              <p className="mb-4 text-xs text-ink-400">{current.label}</p>
+              <h2 className="mb-1 text-sm font-semibold text-ink-900">E-Mails pro Tag</h2>
+              <p className="mb-4 text-xs text-ink-600">{current.label}</p>
 
               {current.daily.length === 0 ? (
                 <p className="py-12 text-center text-sm text-ink-500">Keine Daten im Zeitraum.</p>
@@ -227,8 +232,8 @@ export default function Statistics() {
 
             {/* --- Kategorien --- */}
             <section className="card p-5">
-              <h2 className="mb-1 text-sm font-semibold text-ink-100">Verteilung nach Kategorie</h2>
-              <p className="mb-4 text-xs text-ink-400">
+              <h2 className="mb-1 text-sm font-semibold text-ink-900">Verteilung nach Kategorie</h2>
+              <p className="mb-4 text-xs text-ink-600">
                 {current.totals.received} eingegangene Mails, {current.label.toLowerCase()}
               </p>
 
@@ -238,8 +243,8 @@ export default function Statistics() {
 
           {/* --- 30-Tage-Verlauf --- */}
           <section className="card p-5">
-            <h2 className="mb-1 text-sm font-semibold text-ink-100">Verlauf der letzten 30 Tage</h2>
-            <p className="mb-4 text-xs text-ink-400">
+            <h2 className="mb-1 text-sm font-semibold text-ink-900">Verlauf der letzten 30 Tage</h2>
+            <p className="mb-4 text-xs text-ink-600">
               {trend.totals.received} eingegangen, {trend.totals.sent} beantwortet
             </p>
 
@@ -357,7 +362,7 @@ function CategoryBreakdown({ categories, total }) {
         </thead>
         <tbody>
           {slices.map((slice) => (
-            <tr key={slice.id || slice.name} className="border-t border-ink-800">
+            <tr key={slice.id || slice.name} className="border-t border-ink-200">
               <td className="py-1.5">
                 <span className="flex items-center gap-2">
                   <span
@@ -365,11 +370,11 @@ function CategoryBreakdown({ categories, total }) {
                     style={{ backgroundColor: slice.color }}
                     aria-hidden="true"
                   />
-                  <span className="truncate text-ink-200">{slice.name}</span>
+                  <span className="truncate text-ink-800">{slice.name}</span>
                 </span>
               </td>
-              <td className="py-1.5 text-right tabular-nums text-ink-200">{slice.received}</td>
-              <td className="py-1.5 text-right tabular-nums text-ink-400">
+              <td className="py-1.5 text-right tabular-nums text-ink-800">{slice.received}</td>
+              <td className="py-1.5 text-right tabular-nums text-ink-600">
                 {slice.percentage.toLocaleString('de-DE', { maximumFractionDigits: 1 })} %
               </td>
             </tr>
@@ -390,7 +395,7 @@ function ChartTooltip({ active, payload, label, unit }) {
       className="rounded-lg border px-3 py-2 text-xs shadow-xl"
       style={{ backgroundColor: INK.surface, borderColor: INK.border }}
     >
-      {label && <p className="mb-1.5 font-medium text-ink-100">{label}</p>}
+      {label && <p className="mb-1.5 font-medium text-ink-900">{label}</p>}
       {payload.map((item) => (
         <p key={item.name} className="flex items-center gap-2 leading-relaxed">
           <span
@@ -398,8 +403,8 @@ function ChartTooltip({ active, payload, label, unit }) {
             style={{ backgroundColor: item.color || item.payload?.color }}
             aria-hidden="true"
           />
-          <span className="text-ink-300">{item.name}:</span>
-          <span className="tabular-nums font-medium text-ink-100">
+          <span className="text-ink-700">{item.name}:</span>
+          <span className="tabular-nums font-medium text-ink-900">
             {item.value} {unit}
           </span>
         </p>
@@ -415,7 +420,7 @@ function ChartLegend({ payload }) {
   return (
     <div className="mt-2 flex flex-wrap justify-center gap-4">
       {payload.map((item) => (
-        <span key={item.value} className="flex items-center gap-1.5 text-xs text-ink-300">
+        <span key={item.value} className="flex items-center gap-1.5 text-xs text-ink-700">
           <span
             className="h-2.5 w-2.5 rounded-sm"
             style={{ backgroundColor: item.color }}

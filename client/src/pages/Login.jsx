@@ -30,21 +30,21 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-ink-950 p-6">
+    <div className="flex min-h-screen items-center justify-center bg-ink-50 p-6">
       <div className="w-full max-w-md">
         <div className="mb-8 flex items-center justify-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 text-white">
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-500 text-white">
             <IconMail size={24} />
           </span>
           <div>
-            <h1 className="text-xl font-semibold text-ink-50">MailDraft AI</h1>
-            <p className="text-xs text-ink-400">Kundenservice-Antworten mit KI</p>
+            <h1 className="text-xl font-semibold text-ink-950">MailDraft AI</h1>
+            <p className="text-xs text-ink-600">Kundenservice-Antworten mit KI</p>
           </div>
         </div>
 
         <div className="card p-6">
-          <h2 className="mb-2 text-lg font-semibold text-ink-50">Anmelden</h2>
-          <p className="mb-6 text-sm leading-relaxed text-ink-300">
+          <h2 className="mb-2 text-lg font-semibold text-ink-950">Anmelden</h2>
+          <p className="mb-6 text-sm leading-relaxed text-ink-700">
             Melden Sie sich mit Ihrem Google-Konto an. Ihr Passwort geben Sie dabei
             ausschließlich bei Google ein — diese App bekommt es nie zu sehen.
           </p>

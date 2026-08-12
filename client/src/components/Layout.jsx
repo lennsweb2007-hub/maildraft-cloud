@@ -55,35 +55,42 @@ export default function Layout() {
   const lastSync = sync?.lastSyncAt;
 
   return (
-    <div className="flex min-h-screen bg-ink-950">
+    <div className="flex min-h-screen bg-ink-50">
       {/* --- Seitenleiste --- */}
-      <aside className="flex w-60 shrink-0 flex-col border-r border-ink-800 bg-ink-900/40">
+      <aside className="flex w-60 shrink-0 flex-col border-r border-ink-200 bg-gradient-to-b from-ink-100 to-[#f8f6f4]">
         <button
           type="button"
           onClick={() => navigate('/dashboard')}
-          className="flex items-center gap-2.5 px-5 py-5 text-left"
+          className="flex items-center gap-2.5 px-5 py-6 text-left"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-purple-600 text-white">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-500 text-white">
             <IconMail size={19} />
           </span>
           <span>
-            <span className="block text-sm font-semibold text-ink-50">MailDraft AI</span>
-            <span className="block text-[11px] text-ink-400">
+            <span className="block text-[13px] font-bold uppercase tracking-[0.6px] text-brand-500">
+              MailDraft AI
+            </span>
+            <span className="block text-[11px] text-ink-600">
               {user?.brand_name || 'Kundenservice'}
             </span>
           </span>
         </button>
 
-        <nav className="flex flex-1 flex-col gap-0.5 px-3">
+        <nav className="flex flex-1 flex-col gap-1 px-3">
           {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
+              /*
+               * Die Akzentkante liegt in beiden Zustaenden an, im Ruhezustand
+               * nur durchsichtig. Sonst ruecken die Eintraege beim Wechsel um
+               * drei Pixel zur Seite.
+               */
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                `flex items-center gap-3 rounded-r-lg border-l-[3px] px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-brand-500/15 text-brand-200'
-                    : 'text-ink-300 hover:bg-ink-800 hover:text-ink-100'
+                    ? 'border-brand-500 bg-brand-500/[0.12] text-brand-700'
+                    : 'border-transparent text-ink-700 hover:bg-brand-500/[0.08] hover:text-ink-950'
                 }`
               }
             >
@@ -93,11 +100,11 @@ export default function Layout() {
           ))}
         </nav>
 
-        <div className="border-t border-ink-800 px-3 py-3">
+        <div className="border-t border-ink-200 px-3 py-4">
           <button
             type="button"
             onClick={() => abmelden()}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-ink-400 transition-colors hover:bg-ink-800 hover:text-ink-100"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-brand-500/[0.08] hover:text-ink-950"
           >
             <IconLogout size={17} />
             Abmelden
@@ -112,11 +119,11 @@ export default function Layout() {
 
       {/* --- Inhalt --- */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center justify-end gap-4 border-b border-ink-800 bg-ink-950/80 px-6 backdrop-blur">
-          <div className="text-right text-xs leading-tight text-ink-400">
+        <header className="flex h-16 shrink-0 items-center justify-end gap-4 border-b border-ink-200 bg-white px-6">
+          <div className="text-right text-xs leading-tight text-ink-600">
             <p>
               Zuletzt geprueft:{' '}
-              <span className="text-ink-200">{lastSync ? formatRelative(lastSync) : 'noch nie'}</span>
+              <span className="text-ink-800">{lastSync ? formatRelative(lastSync) : 'noch nie'}</span>
             </p>
             {sync?.autoRefreshEnabled && sync?.nextSyncAt && (
               <p className="mt-0.5">
@@ -131,7 +138,7 @@ export default function Layout() {
               </p>
             )}
             {sync && !sync.autoRefreshEnabled && (
-              <p className="mt-0.5 text-amber-400/80">Automatischer Abruf ist aus</p>
+              <p className="mt-0.5 text-amber-600/80">Automatischer Abruf ist aus</p>
             )}
           </div>
 
