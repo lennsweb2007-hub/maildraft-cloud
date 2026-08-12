@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable react/prop-types */
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { useApp } from '../context/AppContext';
@@ -20,6 +20,7 @@ import {
   IconInbox,
   IconLogout,
   IconMail,
+  IconMenu,
   IconRefresh,
   IconSettings,
 } from './Icons';
@@ -35,6 +36,31 @@ const NAV_ITEMS = [
 export default function Layout() {
   const { user, sync, syncing, refreshEmails, toasts, dismissToast, loadSettings } = useApp();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  /*
+   * Auf schmalen Bildschirmen faehrt die Navigation als Schublade ueber den
+   * Inhalt, statt ihm dauerhaft die halbe Breite zu nehmen. Ab der
+   * lg-Schwelle steht sie wieder fest daneben; dann ist dieser Zustand ohne
+   * Wirkung.
+   */
+  const [navOffen, setNavOffen] = useState(false);
+
+  // Nach jedem Seitenwechsel zu: Sonst bleibt die Schublade offen und
+  // verdeckt genau das, was man aufgerufen hat.
+  useEffect(() => {
+    setNavOffen(false);
+  }, [pathname]);
+
+  // Escape schliesst - erwartetes Verhalten bei allem, was sich ueberlagert.
+  useEffect(() => {
+    if (!navOffen) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setNavOffen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [navOffen]);
 
   // Sorgt dafür, dass "vor 3 Minuten" nicht einfriert.
   const [, setTick] = useState(0);
@@ -57,7 +83,21 @@ export default function Layout() {
   return (
     <div className="flex min-h-screen bg-ink-50">
       {/* --- Seitenleiste --- */}
-      <aside className="flex w-60 shrink-0 flex-col border-r border-ink-200 bg-gradient-to-b from-ink-100 to-[#f8f6f4]">
+      {/* Abdunklung hinter der Schublade - nur auf schmalen Bildschirmen. */}
+      {navOffen && (
+        <button
+          type="button"
+          onClick={() => setNavOffen(false)}
+          className="fixed inset-0 z-30 bg-ink-950/30 lg:hidden"
+          aria-label="Menü schließen"
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 flex-col border-r border-ink-200 bg-gradient-to-b from-ink-100 to-[#f8f6f4] transition-transform duration-200 lg:static lg:z-auto lg:w-60 lg:translate-x-0 ${
+          navOffen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         <button
           type="button"
           onClick={() => navigate('/dashboard')}
@@ -119,14 +159,28 @@ export default function Layout() {
 
       {/* --- Inhalt --- */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center justify-end gap-4 border-b border-ink-200 bg-white px-6">
-          <div className="text-right text-xs leading-tight text-ink-600">
-            <p>
-              Zuletzt geprueft:{' '}
+        <header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-ink-200 bg-white px-4 lg:justify-end lg:px-6">
+          <button
+            type="button"
+            onClick={() => setNavOffen(true)}
+            className="btn-ghost -ml-1.5 p-2 lg:hidden"
+            aria-label="Menü öffnen"
+            aria-expanded={navOffen}
+          >
+            <IconMenu size={20} />
+          </button>
+
+          <div className="min-w-0 text-right text-xs leading-tight text-ink-600">
+            <p className="truncate">
+              {/* Auf schmalen Schirmen faellt das Wort weg - die Uhrzeit
+                  allein sagt bereits alles, was hier zaehlt. */}
+              <span className="hidden sm:inline">Zuletzt geprueft: </span>
               <span className="text-ink-800">{lastSync ? formatRelative(lastSync) : 'noch nie'}</span>
             </p>
             {sync?.autoRefreshEnabled && sync?.nextSyncAt && (
-              <p className="mt-0.5">
+              /* Zweitrangig: auf dem Handy wuerde diese Zeile die Kopfzeile
+                 umbrechen lassen, ohne etwas Handlungsrelevantes zu sagen. */
+              <p className="mt-0.5 hidden sm:block">
                 {/*
                   Liegt der berechnete Zeitpunkt in der Vergangenheit, stand der
                   Abruf länger an als geplant - etwa weil der Rechner aus war.
@@ -146,11 +200,15 @@ export default function Layout() {
             type="button"
             onClick={refreshEmails}
             disabled={syncing}
-            className="btn-secondary"
+            className="btn-secondary shrink-0 px-3 sm:px-4"
             title="Jetzt nach neuen E-Mails suchen"
           >
             {syncing ? <Spinner size={15} /> : <IconRefresh size={15} />}
-            {syncing ? 'Wird geprüft ...' : 'Jetzt prüfen'}
+            {/* Auf dem Handy traegt das Symbol die Bedeutung allein - die
+                Beschriftung wuerde den Knopf sonst umbrechen. */}
+            <span className="hidden sm:inline">
+              {syncing ? 'Wird geprüft ...' : 'Jetzt prüfen'}
+            </span>
           </button>
         </header>
 

@@ -28,6 +28,14 @@ function Svg({ children, size = 18, className = '', strokeWidth = 1.75, ...rest 
   );
 }
 
+export const IconMenu = (props) => (
+  <Svg {...props}>
+    <path d="M3 6h18" />
+    <path d="M3 12h18" />
+    <path d="M3 18h18" />
+  </Svg>
+);
+
 export const IconInbox = (props) => (
   <Svg {...props}>
     <path d="M22 12h-6l-2 3h-4l-2-3H2" />

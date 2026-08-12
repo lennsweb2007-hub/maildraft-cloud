@@ -273,9 +273,12 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="p-6">
-      {/* --- Kennzahlen --- */}
-      <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="p-4 lg:p-6">
+      {/* --- Kennzahlen ---
+          Auf dem Handy zwei nebeneinander statt vier untereinander: gestapelt
+          fuellen sie den ganzen Bildschirm, und die Entwuerfe - worum es hier
+          eigentlich geht - waeren erst nach langem Scrollen zu sehen. */}
+      <div className="mb-5 grid grid-cols-2 gap-3 lg:mb-6 xl:grid-cols-4">
         {kpis.map((kpi) => (
           <StatTile key={kpi.label} {...kpi} />
         ))}
@@ -466,8 +469,14 @@ function DraftRow({ draft, busy, onOpen, onSend, onDelete, onRestore, onApprove,
     draft.relevance_confidence < 0.75;
 
   return (
-    <article className="card group p-4 transition-colors hover:border-ink-300">
-      <div className="flex items-start gap-4">
+    <article className="card group p-3.5 transition-colors hover:border-ink-300 sm:p-4">
+      {/*
+        flex-wrap zusammen mit w-full an der Aktionsspalte: Auf schmalen
+        Schirmen rutscht sie dadurch von selbst auf eine eigene Zeile unter
+        den Text, ab lg steht sie wieder rechts daneben. So gibt es die
+        Knoepfe nur einmal im Quelltext.
+      */}
+      <div className="flex flex-wrap items-start gap-3 sm:gap-4">
         {/* Absender-Kreis */}
         <div
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white"
@@ -525,12 +534,16 @@ function DraftRow({ draft, busy, onOpen, onSend, onDelete, onRestore, onApprove,
         </button>
 
         {/* Zeit und Aktionen */}
-        <div className="flex shrink-0 flex-col items-end gap-2">
+        <div className="flex w-full items-center justify-between gap-2 border-t border-ink-200 pt-2.5 lg:w-auto lg:shrink-0 lg:flex-col lg:items-end lg:border-0 lg:pt-0">
           <span className="whitespace-nowrap text-xs text-ink-500">
             {formatSmartDate(draft.received_at || draft.created_at)}
           </span>
 
-          <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+          {/*
+            Auf Beruehrungsgeraeten gibt es kein hover - dort waeren die
+            Knoepfe sonst nie erreichbar. Deshalb erst ab lg ausgeblendet.
+          */}
+          <div className="flex gap-1 transition-opacity lg:opacity-0 lg:group-hover:opacity-100 lg:focus-within:opacity-100">
             {isPending ? (
               <>
                 <Link to={`/drafts/${draft.id}`} className="btn-ghost px-2 py-1 text-xs">

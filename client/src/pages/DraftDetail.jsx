@@ -191,7 +191,7 @@ export default function DraftDetail() {
   const readOnly = draft.status === 'sent';
 
   return (
-    <div className="p-6">
+    <div className="p-4 lg:p-6">
       {/* --- Kopfzeile --- */}
       <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
         <div className="flex min-w-0 items-start gap-3">

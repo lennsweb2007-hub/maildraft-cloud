@@ -281,15 +281,22 @@ export function ConfirmDialog({
 //  Kennzahl-Kachel
 // ---------------------------------------------------------------------------
 
-export function StatTile({ label, value, hint, icon: Icon, accent = 'text-brand-700' }) {
+export function StatTile({ label, value, hint, icon: Icon, accent = 'text-brand-500' }) {
+  /*
+   * Auf dem Handy stehen zwei dieser Kacheln nebeneinander, also rund 170 px
+   * breit. Beschriftung und Zahl sind dort eine Stufe kleiner; das Symbol
+   * darf nicht schrumpfen, sonst zerdrueckt es eine umbrechende Beschriftung.
+   */
   return (
-    <div className="card p-4">
-      <div className="mb-2 flex items-center justify-between">
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-600">{label}</p>
-        {Icon && <Icon size={16} className={accent} />}
+    <div className="card p-3.5 sm:p-4">
+      <div className="mb-1.5 flex items-start justify-between gap-2 sm:mb-2">
+        <p className="min-w-0 text-[10px] font-bold uppercase leading-tight tracking-[0.5px] text-sage-600 sm:text-[11px]">
+          {label}
+        </p>
+        {Icon && <Icon size={15} className={`shrink-0 ${accent}`} />}
       </div>
-      <p className="text-2xl font-semibold tabular-nums text-ink-950">{value}</p>
-      {hint && <p className="mt-1 text-xs text-ink-600">{hint}</p>}
+      <p className="text-xl font-semibold tabular-nums text-ink-950 sm:text-2xl">{value}</p>
+      {hint && <p className="mt-1 text-[11px] leading-snug text-ink-600 sm:text-xs">{hint}</p>}
     </div>
   );
 }

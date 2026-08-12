@@ -101,7 +101,7 @@ export default function Statistics() {
   const hasAnyData = trend.totals.received > 0 || trend.totals.sent > 0;
 
   return (
-    <div className="p-6">
+    <div className="p-4 lg:p-6">
       {/* --- Kopf --- */}
       <header className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <div>

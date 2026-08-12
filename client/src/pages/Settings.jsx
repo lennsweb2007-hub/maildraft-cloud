@@ -41,7 +41,7 @@ export default function Settings() {
   const [tab, setTab] = useState('accounts');
 
   return (
-    <div className="p-6">
+    <div className="p-4 lg:p-6">
       <header className="mb-5">
         <h1 className="text-lg font-semibold text-ink-950">Einstellungen</h1>
         <p className="mt-0.5 text-sm text-ink-600">
