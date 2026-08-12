@@ -5,26 +5,13 @@
   "framework": null,
 
   "functions": {
-    "api/emails/fetch.ts": {
-      "//": "Der Abruf ist die einzige laufzeitintensive Funktion. 60 Sekunden sind auch im kostenlosen Tarif erlaubt; die Funktion arbeitet in Haeppchen und meldet Restbestand, statt in ein Zeitlimit zu laufen. Wer den Pro-Tarif nutzt, kann hier bis 300 erhoehen und SYNC_TIME_BUDGET_MS entsprechend anpassen.",
-      "maxDuration": 60
-    },
-    "api/drafts/send.ts": {
-      "//": "Versand ueber SMTP oder Provider-API kann bei traegen Servern dauern.",
-      "maxDuration": 30
-    },
-    "api/drafts/regenerate.ts": {
-      "//": "Ein einzelner Gemini-Aufruf, mit Wiederholung bei Ueberlastung.",
-      "maxDuration": 30
-    }
+    "api/emails/fetch.ts": { "maxDuration": 60 },
+    "api/drafts/send.ts": { "maxDuration": 30 },
+    "api/drafts/regenerate.ts": { "maxDuration": 30 }
   },
 
   "rewrites": [
-    {
-      "//": "React Router uebernimmt das Routing im Browser: alles, was keine Datei und keine API ist, bekommt die index.html.",
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
 
   "headers": [

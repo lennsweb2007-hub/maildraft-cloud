@@ -99,6 +99,20 @@ Serverless hat keinen Prozess, der zwischen Anfragen weiterläuft.
 
 Dazu: **SQLite-Backups entfallen** — Supabase sichert selbst.
 
+### Zeitlimits der Funktionen
+
+In `vercel.json` stehen drei Werte ohne Erklärung, weil die Datei streng
+validiert wird und keine Kommentare erlaubt:
+
+| Funktion | `maxDuration` | Warum |
+|---|---|---|
+| `api/emails/fetch.ts` | 60 s | Die einzige laufzeitintensive Funktion. 60 s sind auch im kostenlosen Tarif erlaubt; sie arbeitet in Häppchen und meldet den Restbestand, statt in ein Zeitlimit zu laufen. Im Pro-Tarif sind bis 300 s möglich — dann `SYNC_TIME_BUDGET_MS` entsprechend anheben. |
+| `api/drafts/send.ts` | 30 s | Versand über SMTP oder Provider-API kann bei trägen Servern dauern. |
+| `api/drafts/regenerate.ts` | 30 s | Ein einzelner Gemini-Aufruf, mit Wiederholung bei Überlastung. |
+
+Die `rewrites`-Regel schickt alles, was keine Datei und kein `/api`-Pfad ist,
+an `index.html` — das Routing übernimmt React Router im Browser.
+
 ---
 
 ## Sicherheit
