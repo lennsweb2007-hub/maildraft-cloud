@@ -122,14 +122,23 @@ als Entwurf mit der Kennung „send" gelesen.
 
 ### Zeitlimits der Funktionen
 
-In `vercel.json` stehen drei Werte ohne Erklärung, weil die Datei streng
-validiert wird und keine Kommentare erlaubt:
+In `vercel.json` steht ein Wert ohne Erklärung, weil die Datei streng validiert
+wird und keine Kommentare erlaubt:
 
-| Funktion | `maxDuration` | Warum |
-|---|---|---|
-| Alle (`api/[...pfad].ts`) | 60 s | Die einzige laufzeitintensive Funktion. 60 s sind auch im kostenlosen Tarif erlaubt; sie arbeitet in Häppchen und meldet den Restbestand, statt in ein Zeitlimit zu laufen. Im Pro-Tarif sind bis 300 s möglich — dann `SYNC_TIME_BUDGET_MS` entsprechend anheben. |
-| `api/drafts/send.ts` | 30 s | Versand über SMTP oder Provider-API kann bei trägen Servern dauern. |
-| `api/drafts/regenerate.ts` | 30 s | Ein einzelner Gemini-Aufruf, mit Wiederholung bei Überlastung. |
+```json
+"functions": { "api/[...pfad].ts": { "maxDuration": 60 } }
+```
+
+Seit alle Endpunkte in einer Funktion liegen, gilt **ein** Zeitlimit für alle.
+60 Sekunden richten sich nach dem anspruchsvollsten Fall, dem Mail-Abruf: Er
+arbeitet in Häppchen und meldet den Restbestand, statt in ein Zeitlimit zu
+laufen. 60 s sind auch im kostenlosen Tarif erlaubt; im Pro-Tarif sind bis
+300 s möglich — dann `SYNC_TIME_BUDGET_MS` entsprechend anheben.
+
+Die übrigen Endpunkte brauchen deutlich weniger. Nennenswert sind nur der
+Versand (SMTP kann bei trägen Servern dauern) und das Neuschreiben eines
+Entwurfs (ein Gemini-Aufruf mit Wiederholung bei Überlastung) — beide lagen
+vorher bei 30 s und liegen damit weiterhin gut innerhalb der Grenze.
 
 Die `rewrites`-Regel schickt alles, was keine Datei und kein `/api`-Pfad ist,
 an `index.html` — das Routing übernimmt React Router im Browser.
