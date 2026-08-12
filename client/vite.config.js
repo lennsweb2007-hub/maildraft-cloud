@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 /**
@@ -8,10 +8,18 @@ import react from '@vitejs/plugin-react';
  * ausgeliefert. Die API laeuft unter derselben Adresse auf /api - deshalb
  * braucht der Client keine Basis-URL und es gibt keine CORS-Fragen.
  *
- * Fuer die lokale Entwicklung mit "vercel dev" leitet der Proxy /api an den
- * lokalen Funktions-Server weiter.
+ * Fuer die lokale Entwicklung leitet der Proxy /api standardmaessig an
+ * "vercel dev" auf Port 3000 weiter. Wer nur an der Oberflaeche arbeitet,
+ * braucht dafuer keinen lokalen Funktions-Server: DEV_API_TARGET auf die
+ * bereitgestellte Adresse setzen, dann laeuft die Oberflaeche lokal gegen die
+ * echte API. Aenderungen wirken dabei auf echte Daten - beim blossen Ansehen
+ * unkritisch, beim Ausprobieren von Loeschen und Senden nicht.
  */
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, '..', '');
+  const apiZiel = env.DEV_API_TARGET || 'http://127.0.0.1:3000';
+
+  return {
   plugins: [react()],
 
   // Env-Dateien liegen im Projektwurzelverzeichnis, nicht in client/. So teilen
@@ -24,7 +32,9 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     proxy: {
-      '/api': { target: 'http://127.0.0.1:3000', changeOrigin: false },
+      /* changeOrigin ist noetig, sobald das Ziel nicht localhost ist: Vercel
+         waehlt das Projekt anhand des Host-Kopfes aus. */
+      '/api': { target: apiZiel, changeOrigin: true },
     },
   },
 
@@ -45,4 +55,5 @@ export default defineConfig({
       },
     },
   },
+  };
 });
