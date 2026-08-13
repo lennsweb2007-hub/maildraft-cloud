@@ -28,6 +28,7 @@ import {
   Notice,
   Spinner,
 } from '../components/ui';
+import VoiceInput from '../components/VoiceInput';
 import { formatInterval } from '../utils/format';
 
 const TABS = [
@@ -562,12 +563,20 @@ function GeneralTab() {
           <label className="label" htmlFor="set-brand">
             Markenname
           </label>
-          <input
-            id="set-brand"
-            className="input"
-            value={form.brand_name}
-            onChange={(event) => set('brand_name', event.target.value)}
-          />
+          <div className="flex gap-2">
+            <input
+              id="set-brand"
+              className="input"
+              value={form.brand_name}
+              onChange={(event) => set('brand_name', event.target.value)}
+            />
+            <VoiceInput
+              value={form.brand_name}
+              onChange={(text) => set('brand_name', text)}
+              mode="replace"
+              fieldLabel="Markenname"
+            />
+          </div>
         </div>
 
         <div>
@@ -592,9 +601,17 @@ function GeneralTab() {
 
         {form.tone === 'custom' && (
           <div>
-            <label className="label" htmlFor="set-custom-tone">
-              Eigener Tonfall
-            </label>
+            <div className="flex items-center justify-between gap-2">
+              <label className="label" htmlFor="set-custom-tone">
+                Eigener Tonfall
+              </label>
+              <VoiceInput
+                value={form.custom_tone}
+                onChange={(text) => set('custom_tone', text)}
+                fieldLabel="Eigener Tonfall"
+                className="-mt-1"
+              />
+            </div>
             <textarea
               id="set-custom-tone"
               rows={3}
@@ -607,9 +624,17 @@ function GeneralTab() {
         )}
 
         <div>
-          <label className="label" htmlFor="set-signature">
-            Signatur
-          </label>
+          <div className="flex items-center justify-between gap-2">
+            <label className="label" htmlFor="set-signature">
+              Signatur
+            </label>
+            <VoiceInput
+              value={form.signature}
+              onChange={(text) => set('signature', text)}
+              fieldLabel="Signatur"
+              className="-mt-1"
+            />
+          </div>
           <textarea
             id="set-signature"
             rows={4}
@@ -645,9 +670,18 @@ function GeneralTab() {
         </label>
 
         <div>
-          <label className="label" htmlFor="set-context">
-            Was macht Ihr Geschäft, und was ist für Sie Kundenservice?
-          </label>
+          <div className="flex items-center justify-between gap-2">
+            <label className="label" htmlFor="set-context">
+              Was macht Ihr Geschäft, und was ist für Sie Kundenservice?
+            </label>
+            <VoiceInput
+              value={form.business_context}
+              onChange={(text) => set('business_context', text)}
+              fieldLabel="Beschreibung des Geschäfts"
+              disabled={!form.relevance_filter_enabled}
+              className="-mt-1"
+            />
+          </div>
           <textarea
             id="set-context"
             rows={5}

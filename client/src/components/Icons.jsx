@@ -234,6 +234,26 @@ export const IconDatabase = (props) => (
   </Svg>
 );
 
+export const IconMic = (props) => (
+  <Svg {...props}>
+    <rect x="9" y="2" width="6" height="11" rx="3" />
+    <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
+    <path d="M12 18v4M8 22h8" />
+  </Svg>
+);
+
+/** Mikrofon mit Querstrich - für Browser ohne Spracherkennung. */
+export const IconMicOff = (props) => (
+  <Svg {...props}>
+    <path d="M9 9V5a3 3 0 0 1 5.12-2.12" />
+    <path d="M15 9.34V5a3 3 0 0 0-.88-2.12" />
+    <path d="M19 10v1a7 7 0 0 1-11.7 5.2" />
+    <path d="M5 10v1a7 7 0 0 0 1.3 4.06" />
+    <path d="M12 18v4M8 22h8" />
+    <path d="m2 2 20 20" />
+  </Svg>
+);
+
 /** Ordnet den in der Datenbank gespeicherten Symbolnamen eine Komponente zu. */
 export const CATEGORY_ICONS = {
   package: IconInbox,

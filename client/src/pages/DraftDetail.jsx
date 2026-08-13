@@ -29,6 +29,7 @@ import {
   Notice,
   Spinner,
 } from '../components/ui';
+import VoiceInput from '../components/VoiceInput';
 import { formatDateTime, initialsOf } from '../utils/format';
 
 export default function DraftDetail() {
@@ -370,9 +371,19 @@ export default function DraftDetail() {
             </div>
 
             <div className="flex flex-1 flex-col">
-              <label className="label text-xs" htmlFor="draft-body">
-                Nachricht
-              </label>
+              <div className="flex items-center justify-between gap-2">
+                <label className="label text-xs" htmlFor="draft-body">
+                  Nachricht
+                </label>
+                {!readOnly && (
+                  <VoiceInput
+                    value={body}
+                    onChange={setBody}
+                    fieldLabel="Antworttext"
+                    className="-mt-1"
+                  />
+                )}
+              </div>
               <textarea
                 id="draft-body"
                 ref={textareaRef}

@@ -40,6 +40,7 @@ import {
   StatusDot,
   ToastContainer,
 } from '../components/ui';
+import VoiceInput from '../components/VoiceInput';
 
 const STEPS = [
   { id: 1, title: 'Willkommen', short: 'Start' },
@@ -221,11 +222,18 @@ function StepWelcome({ user, onSaved }) {
   const [brand, setBrand] = useState(user?.brand_name || '');
   const [saving, setSaving] = useState(false);
 
-  async function save() {
-    if (!brand.trim()) return;
+  /**
+   * Speichert den Markennamen.
+   *
+   * Der Wert wird uebergeben statt aus dem State gelesen: Nach einer
+   * Spracheingabe steht der neue Text im selben Durchlauf noch nicht im State,
+   * und gespeichert wuerde der alte.
+   */
+  async function save(wert = brand) {
+    if (!wert.trim()) return;
     setSaving(true);
     try {
-      await api.settings.update({ brand_name: brand.trim() });
+      await api.settings.update({ brand_name: wert.trim() });
       await onSaved();
       showToast('Markenname gespeichert.', 'success');
     } catch (err) {
@@ -265,10 +273,24 @@ function StepWelcome({ user, onSaved }) {
           className="input"
           value={brand}
           onChange={(event) => setBrand(event.target.value)}
-          onBlur={save}
+          onBlur={() => save()}
           placeholder="z.B. Nordlicht Studio"
         />
-        <button type="button" onClick={save} disabled={saving || !brand.trim()} className="btn-secondary">
+        <VoiceInput
+          value={brand}
+          onChange={(text) => {
+            setBrand(text);
+            save(text);
+          }}
+          mode="replace"
+          fieldLabel="Markenname"
+        />
+        <button
+          type="button"
+          onClick={() => save()}
+          disabled={saving || !brand.trim()}
+          className="btn-secondary"
+        >
           {saving ? <Spinner size={15} /> : 'Speichern'}
         </button>
       </div>
@@ -891,6 +913,8 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -900,6 +924,14 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
       category_id: scenario?.category_id || '',
     },
   });
+
+  /*
+   * Spracheingabe und react-hook-form zusammenbringen: Das Formular haelt den
+   * Wert, deshalb wird er hier gelesen und zurueckgeschrieben. shouldDirty,
+   * damit das Formular die Aenderung als solche erkennt.
+   */
+  const setzePerSprache = (feld) => (text) =>
+    setValue(feld, text, { shouldDirty: true, shouldValidate: true });
 
   async function onSubmit(values) {
     setSaving(true);
@@ -937,12 +969,20 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
         <label className="label" htmlFor="scenario-title">
           Titel
         </label>
-        <input
-          id="scenario-title"
-          className="input"
-          placeholder="z.B. Retourenfrage"
-          {...register('title', { required: 'Ein Titel wird benötigt.' })}
-        />
+        <div className="flex gap-2">
+          <input
+            id="scenario-title"
+            className="input"
+            placeholder="z.B. Retourenfrage"
+            {...register('title', { required: 'Ein Titel wird benötigt.' })}
+          />
+          <VoiceInput
+            value={watch('title')}
+            onChange={setzePerSprache('title')}
+            mode="replace"
+            fieldLabel="Titel des Szenarios"
+          />
+        </div>
         {errors.title && <p className="hint text-red-600">{errors.title.message}</p>}
       </div>
 
@@ -977,9 +1017,17 @@ export function ScenarioForm({ scenario, onCancel, onSaved }) {
       </div>
 
       <div>
-        <label className="label" htmlFor="scenario-example">
-          Beispielantwort
-        </label>
+        <div className="flex items-center justify-between gap-2">
+          <label className="label" htmlFor="scenario-example">
+            Beispielantwort
+          </label>
+          <VoiceInput
+            value={watch('example_response')}
+            onChange={setzePerSprache('example_response')}
+            fieldLabel="Beispielantwort"
+            className="-mt-1"
+          />
+        </div>
         <textarea
           id="scenario-example"
           rows={9}
@@ -1110,9 +1158,20 @@ function StepTone({ user, onSaved }) {
 
         {tone === 'custom' && (
           <div className="mt-4">
-            <label className="label" htmlFor="custom-tone">
-              Beschreiben Sie den gewünschten Ton
-            </label>
+            <div className="flex items-center justify-between gap-2">
+              <label className="label" htmlFor="custom-tone">
+                Beschreiben Sie den gewünschten Ton
+              </label>
+              <VoiceInput
+                value={customTone}
+                onChange={(text) => {
+                  setCustomTone(text);
+                  save({ customTone: text });
+                }}
+                fieldLabel="Eigener Tonfall"
+                className="-mt-1"
+              />
+            </div>
             <textarea
               id="custom-tone"
               rows={3}
@@ -1127,9 +1186,20 @@ function StepTone({ user, onSaved }) {
       </div>
 
       <div className="card p-6">
-        <label className="label" htmlFor="signature">
-          Signatur
-        </label>
+        <div className="flex items-center justify-between gap-2">
+          <label className="label" htmlFor="signature">
+            Signatur
+          </label>
+          <VoiceInput
+            value={signature}
+            onChange={(text) => {
+              setSignature(text);
+              save({ signature: text });
+            }}
+            fieldLabel="Signatur"
+            className="-mt-1"
+          />
+        </div>
         <textarea
           id="signature"
           rows={4}

@@ -34,6 +34,7 @@ import {
   Spinner,
   StatTile,
 } from '../components/ui';
+import VoiceInput from '../components/VoiceInput';
 import { colorFor, formatSmartDate, initialsOf, truncate } from '../utils/format';
 
 const STATUS_TABS = [
@@ -330,17 +331,20 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <div className="relative min-w-[14rem] flex-1">
-          <IconSearch
-            size={15}
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500"
-          />
-          <input
-            className="input pl-9"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Nach Betreff oder Absender suchen"
-          />
+        <div className="flex min-w-[14rem] flex-1 items-center gap-1">
+          <div className="relative flex-1">
+            <IconSearch
+              size={15}
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-500"
+            />
+            <input
+              className="input pl-9"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Nach Betreff oder Absender suchen"
+            />
+          </div>
+          <VoiceInput value={search} onChange={setSearch} mode="replace" fieldLabel="Suche" />
         </div>
 
         <select
